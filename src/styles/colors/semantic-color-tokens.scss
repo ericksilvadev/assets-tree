@@ -1,0 +1,22 @@
+@import './neutral-color-tokens.scss';
+
+$semantics-global-white: $neutral-colors-white;
+
+$semantics-green-medium: $neutral-colors-green-500;
+
+$semantics-red-medium: $neutral-colors-red-500;
+
+$semantics-blue-low-faded: $neutral-colors-blue-100;
+$semantics-blue-hight-faded: $neutral-colors-blue-400;
+
+$semantics-blue-low-emphasis: $neutral-colors-blue-500;
+$semantics-blue-medium-emphasis: $neutral-colors-blue-900;
+$semantics-blue-hight-emphasis: $neutral-colors-blue-950;
+
+$semantics-gray-low-faded: $neutral-colors-gray-100;
+$semantics-gray-medium-faded: $neutral-colors-gray-200;
+$semantics-gray-hight-faded: $neutral-colors-gray-300;
+
+$semantics-gray-low-emphasis: $neutral-colors-gray-500;
+$semantics-gray-medium-emphasis: $neutral-colors-gray-600;
+$semantics-gray-high-emphasis: $neutral-colors-gray-950;
