@@ -1,0 +1,38 @@
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+h1,
+h2 {
+  font-weight: 600;
+  color: $semantics-gray-high-emphasis;
+}
+
+h1 {
+  font-size: 1.8rem;
+  line-height: 2.8rem;
+}
+
+h2 {
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+}
+
+p {
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  color: $semantics-gray-low-emphasis;
+}
+
+label {
+  font-family: 'Roboto';
+  font-size: 1.4rem;
+  line-height: 2.2rem;
+  color: $semantics-blue-hight-emphasis;
+}
+
+a,
+.link {
+  font-size: 1.4rem;
+  color: $semantics-blue-low-emphasis;
+}
