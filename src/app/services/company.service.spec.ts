@@ -35,7 +35,7 @@ describe('CompanyService', () => {
     // assert
     expect(service.companies().length).toBe(1);
     expect(service.companies()[0].id).toBe(company.id);
-    expect(service.companies()[0].name).toBe(company.name);
+    expect(service.companies()[0].name).toBe(company.name + ' Unit');
     done();
   });
 
@@ -54,7 +54,7 @@ describe('CompanyService', () => {
 
     // assert
     expect(context.currentCompany.value.id).toBe(company.id);
-    expect(context.currentCompany.value.name).toBe(company.name);
+    expect(context.currentCompany.value.name).toBe(company.name + ' Unit');
   });
 
   it('should not set context company if already set', () => {

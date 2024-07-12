@@ -1,0 +1,21 @@
+@import '../../../styles/colors/semantic-color-tokens.scss';
+
+
+.container {
+  height: calc(100svh - var(--header-height));
+  padding: 0.8rem;
+  display: flex;
+}
+
+main {
+  background-color: $semantics-global-white;
+  border: 1px solid $semantics-gray-medium-faded;
+  border-radius: 0.4rem;
+  padding: 1.6rem;
+  flex: 1;
+
+  header {
+    display: flex;
+    justify-content: space-between;
+  }
+}

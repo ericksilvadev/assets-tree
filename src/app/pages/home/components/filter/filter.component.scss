@@ -1,0 +1,40 @@
+@import '../../../../../styles/colors/semantic-color-tokens.scss';
+
+.filters-wrapper {
+  display: flex;
+  gap: 0.8rem;
+
+  .filter label {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    padding: 0.6rem 1.6rem;
+    border-radius: 0.3rem;
+    border: 1px solid $semantics-gray-medium-faded;
+    color: $semantics-gray-medium-emphasis;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    span {
+      color: $semantics-gray-medium-emphasis;
+      transition: all 0.2s;
+
+      &::selection {
+        background-color: transparent;
+      }
+    }
+
+    &.active {
+      background-color: $semantics-blue-low-emphasis;
+      color: $semantics-global-white;
+
+      span {
+        color: $semantics-global-white;
+      }
+    }
+  }
+
+  .filter input {
+    display: none;
+  }
+}

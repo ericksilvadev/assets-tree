@@ -1,0 +1,9 @@
+.breadcrumb:first-child {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--semantics-gray-high-emphasis);
+
+  .separator {
+    display: none;
+  }
+}

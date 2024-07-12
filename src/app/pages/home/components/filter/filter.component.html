@@ -1,0 +1,19 @@
+<div class="filters-wrapper">
+  <div class="filter">
+    <label for="energy-sensor" [class.active]="energyChecked()">
+      <app-icon name="thunderbolt"></app-icon>
+      <span>Sensor de Energia</span>
+    </label>
+    <input #energyCheckbox type="checkbox" [checked]="energyChecked()"
+      (change)="onEnergyFilterChange(energyCheckbox.checked)" name="energy-sensor" id="energy-sensor">
+  </div>
+
+  <div class="filter">
+    <label for="critical-status" [class.active]="criticalChecked()">
+      <app-icon name="info"></app-icon>
+      <span>Status Crítico</span>
+    </label>
+    <input #criticalCheckbox type="checkbox" [checked]="criticalChecked()"
+      (change)="onCriticalFilterChange(criticalCheckbox.checked)" name="critical-status" id="critical-status">
+  </div>
+</div>

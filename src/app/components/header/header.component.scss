@@ -4,7 +4,8 @@ header {
   background-color: $semantics-blue-hight-emphasis;
   display: flex;
   justify-content: space-between;
-  padding: 1.2rem 1.6rem;
+  padding-inline: 1.6rem;
+  min-height: var(--header-height);
   align-items: center;
 
   nav {
