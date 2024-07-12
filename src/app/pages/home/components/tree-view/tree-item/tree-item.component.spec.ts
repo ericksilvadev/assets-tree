@@ -35,7 +35,13 @@ describe('TreeItemComponent', () => {
 
   it('should display item icon', () => {
     // assert
-    const itemIcon = fixture.debugElement.query(By.css('app-icon')).componentInstance as IconComponent;
+    const itemIcon = fixture.debugElement.query(By.css('[data-test-id="item-icon"]')).componentInstance as IconComponent;
     expect(itemIcon.name).toBe(component['model']().icon);
+  });
+
+  it('should display item sensor icon', () => {
+    // assert
+    const itemIcon = fixture.debugElement.query(By.css('[data-test-id="sensor-icon"]')).componentInstance as IconComponent;
+    expect(itemIcon.name).toBe(component['model']().sensor!);
   });
 });
