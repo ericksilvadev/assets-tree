@@ -55,4 +55,10 @@ describe('TreeItemComponent', () => {
     const itemIcon = fixture.debugElement.query(By.css('[data-test-id="sensor-icon"]'));
     expect(itemIcon).toBeNull();
   });
+
+  it('should set sensor icon red if status is alert', () => {
+    // assert
+    const itemIcon = fixture.debugElement.query(By.css('[data-test-id="sensor-icon"]')).componentInstance as IconComponent;
+    expect(itemIcon.class()).toContain('c-red');
+  });
 });
