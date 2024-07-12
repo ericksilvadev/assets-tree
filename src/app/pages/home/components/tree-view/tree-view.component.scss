@@ -1,3 +1,13 @@
-aside {
-  width: 300px;
+@import '../../../../../styles/colors/semantic-color-tokens.scss';
+
+.tree-view {
+  $translate-y: 0.5rem;
+
+  border: 1px solid $semantics-gray-medium-faded;
+  border-top: 0;
+  border-radius: 0.3rem;
+  padding: 0.8rem;
+  background-color: $semantics-global-white;
+  height: calc(100% + $translate-y);
+  translate: 0 calc($translate-y * -1);
 }

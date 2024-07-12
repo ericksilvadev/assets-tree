@@ -1,4 +1,4 @@
-@import '../../../../../../styles/colors/semantic-color-tokens.scss';
+@import '../../../../../styles/colors/semantic-color-tokens.scss';
 
 .input-wrapper {
   display: flex;
@@ -8,6 +8,8 @@
   border-radius: 0.3rem;
   padding: 0.8rem;
   background-color: $semantics-global-white;
+  position: relative;
+  z-index: 1;
 
   input {
     width: 100%;

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject, debounceTime, distinctUntilChanged } from 'rxjs';
-import { FilterModel } from '../../../../../models/filter.model';
-import { FilterService } from '../../../../../services/filter.service';
+import { FilterModel } from '../../../../models/filter.model';
+import { FilterService } from '../../../../services/filter.service';
 import { CommonModule } from '@angular/common';
-import { IconComponent } from "../../../../../components/icon/icon.component";
+import { IconComponent } from "../../../../components/icon/icon.component";
 
 @Component({
   selector: 'app-search-filter',

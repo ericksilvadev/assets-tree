@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SearchFilterComponent } from "./search-filter/search-filter.component";
+import { SearchFilterComponent } from "../search-filter/search-filter.component";
 
 @Component({
   selector: 'app-tree-view',

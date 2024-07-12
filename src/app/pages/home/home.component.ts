@@ -5,11 +5,12 @@ import { AppContextService } from '../../services/app-context.service';
 import { BreadcrumbsComponent } from "./components/breadcrumbs/breadcrumbs.component";
 import { FilterComponent } from "./components/filter/filter.component";
 import { TreeViewComponent } from "./components/tree-view/tree-view.component";
+import { SearchFilterComponent } from "./components/search-filter/search-filter.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [BreadcrumbsComponent, FilterComponent, TreeViewComponent],
+  imports: [BreadcrumbsComponent, FilterComponent, TreeViewComponent, SearchFilterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
