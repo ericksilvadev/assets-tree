@@ -36,6 +36,6 @@ describe('IconComponent', () => {
     const icon = component['getIcon'](iconName);
 
     // assert
-    expect(icon).toContain(expectedIcon);
+    expect(icon.toString()).toContain(expectedIcon);
   });
 });
