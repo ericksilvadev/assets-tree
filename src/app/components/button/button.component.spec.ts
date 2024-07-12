@@ -44,4 +44,17 @@ describe('ButtonComponent', () => {
     // assert
     expect(iconComponent).toBeNull();
   });
+
+  it('should set button variation correctly', () => {
+    // arrange
+    const expectedVariation = 'primary';
+    fixture.componentRef.setInput('variation', expectedVariation);
+
+    // act
+    fixture.detectChanges();
+    const button = fixture.debugElement.query(By.css('button'));
+
+    // assert
+    expect(button.nativeElement.classList).toContain(expectedVariation);
+  })
 });

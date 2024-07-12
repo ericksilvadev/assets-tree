@@ -1,4 +1,4 @@
-import { Component, input, Input } from '@angular/core';
+import { Component, input, Input, InputSignal } from '@angular/core';
 import { IconComponent } from "../icon/icon.component";
 
 @Component({
@@ -10,4 +10,5 @@ import { IconComponent } from "../icon/icon.component";
 })
 export class ButtonComponent {
   icon = input('');
+  variation = input<'primary' | 'secondary'>('primary');
 }
