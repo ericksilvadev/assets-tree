@@ -43,6 +43,8 @@ export class CompanyService {
   }
 
   private setCompanyById() {
+    if (this.appContext.currentCompany.value.id) return;
+
     const company = this.companies().find((company) => company.id === this.companyParamId);
 
     this.appContext.setCurrentCompany(company ?? this.companies()[0]);
