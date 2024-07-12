@@ -11,4 +11,9 @@ button {
   background-color: $semantics-blue-low-emphasis;
   color: $semantics-global-white;
   cursor: pointer;
+  transition: background-color 0.2s;
+
+  &.secondary {
+    background-color: $semantics-blue-medium-emphasis;
+  }
 }
