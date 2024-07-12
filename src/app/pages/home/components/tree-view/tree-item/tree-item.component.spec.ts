@@ -27,7 +27,7 @@ describe('TreeItemComponent', () => {
 
   it('should display item name', () => {
     // assert
-    const itemName = fixture.nativeElement.querySelector('.item-name');
+    const itemName = fixture.nativeElement.querySelector('.tree-item-name');
     expect(itemName.textContent).toBe(component['model']().name);
   });
 });
