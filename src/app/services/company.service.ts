@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable, signal, Signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Company } from '../models/company.model';
 import { CompanyRepository } from '../repositories/company.repository';
 
@@ -8,10 +8,14 @@ import { CompanyRepository } from '../repositories/company.repository';
 })
 export class CompanyService {
 
-  constructor(private companyRepository: CompanyRepository) { }
+  public companies: Signal<Company[]> = signal([]);
 
-  public getCompanies(): Observable<Company[]> {
-    return this.companyRepository.getCompanies();
+  constructor(private companyRepository: CompanyRepository) {
+    this.setCompanies();
+  }
+
+  public setCompanies() {
+    this.companies = toSignal(this.companyRepository.getCompanies(), { initialValue: [] });
   }
 
 }

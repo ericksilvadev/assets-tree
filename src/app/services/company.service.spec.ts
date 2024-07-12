@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { Company } from '../models/company.model';
 import { CompanyRepository } from '../repositories/company.repository';
 import { CompanyService } from './company.service';
+import { Injector, runInInjectionContext } from '@angular/core';
 
 describe('CompanyService', () => {
   let service: CompanyService;
@@ -21,18 +22,21 @@ describe('CompanyService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get companies', (done: DoneFn) => {
+  it('should set companies', (done: DoneFn) => {
     // arrange
     const company = new Company('1', 'Company 1');
     spyOn(service['companyRepository'], 'getCompanies').and.returnValue(of([company]));
 
     // act
-    service.getCompanies().subscribe(companies => {
-      // assert
-      expect(companies.length).toBe(1);
-      expect(companies[0].id).toBe(company.id);
-      expect(companies[0].name).toBe(company.name);
-      done();
+    runInInjectionContext(TestBed.inject(Injector), () => {
+      service.setCompanies()
     });
+    // assert
+    expect(service.companies().length).toBe(1);
+    expect(service.companies()[0].id).toBe(company.id);
+    expect(service.companies()[0].name).toBe(company.name);
+    done();
   });
+
+  it('should set ')
 });

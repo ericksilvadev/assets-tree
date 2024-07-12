@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Injector, runInInjectionContext } from '@angular/core';
-import { of } from 'rxjs';
+import { signal } from '@angular/core';
 import { Company } from '../../models/company.model';
 import { HeaderComponent } from './header.component';
 
@@ -32,13 +31,9 @@ describe('HeaderComponent', () => {
       new Company('2', 'Company 2')
     ]
 
-    spyOn(component['companyService'], 'getCompanies').and.returnValue(of(companies));
+    component['companies'] = signal(companies);
 
     // act
-    runInInjectionContext(TestBed.inject(Injector), () => {
-      component['setCompanies']();
-    });
-
     fixture.detectChanges();
     const companyButtons = fixture.nativeElement.querySelectorAll('nav app-button');
 

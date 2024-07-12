@@ -1,4 +1,4 @@
-import { Component, signal, Signal } from '@angular/core';
+import { Component, computed, signal, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Company } from '../../models/company.model';
 import { CompanyService } from '../../services/company.service';
@@ -13,13 +13,7 @@ import { ButtonComponent } from '../button/button.component';
 })
 export class HeaderComponent {
 
-  protected companies: Signal<Company[]> = signal([]);
+  protected companies: Signal<Company[]> = computed(() => this.companyService.companies());
 
-  constructor(private companyService: CompanyService) {
-    this.setCompanies();
-  }
-
-  private setCompanies() {
-    this.companies = toSignal(this.companyService.getCompanies(), { initialValue: [] });
-  }
+  constructor(private companyService: CompanyService) { }
 }
