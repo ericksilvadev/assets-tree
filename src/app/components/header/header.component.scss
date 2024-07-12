@@ -1,0 +1,14 @@
+@import '../../../styles/colors/semantic-color-tokens.scss';
+
+header {
+  background-color: $semantics-blue-hight-emphasis;
+  display: flex;
+  justify-content: space-between;
+  padding: 1.2rem 1.6rem;
+  align-items: center;
+
+  nav {
+    display: flex;
+    gap: 1rem;
+  }
+}
