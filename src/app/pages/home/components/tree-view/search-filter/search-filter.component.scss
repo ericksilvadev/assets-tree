@@ -4,12 +4,17 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  border: 1px solid $semantics-gray-medium-faded;
+  border-radius: 0.3rem;
+  padding: 0.8rem;
+  background-color: $semantics-global-white;
 
   input {
     width: 100%;
     padding: 1.2rem;
     border: none;
     outline: none;
+    color: $neutral-colors-gray-950;
 
     &::placeholder {
       color: $semantics-gray-hight-faded;
@@ -22,5 +27,6 @@
     border: none;
     cursor: pointer;
     padding: 0.6rem;
+    color: $neutral-colors-gray-950;
   }
 }
