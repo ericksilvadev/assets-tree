@@ -1,6 +1,7 @@
-import { Injectable, signal, WritableSignal } from '@angular/core';
-import { Company } from '../models/company.model';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { Company } from '../models/company.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +10,10 @@ export class AppContextService {
 
   public currentCompany: BehaviorSubject<Company> = new BehaviorSubject<Company>(new Company('', ''));
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   public setCurrentCompany(company: Company) {
     this.currentCompany.next(company);
+    this.router.navigate(['/company', company.id]);
   }
 }
