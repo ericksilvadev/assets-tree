@@ -34,4 +34,13 @@ describe('ButtonComponent', () => {
     // assert
     expect(iconComponent.name).toBe(component.icon);
   });
+
+  it('should not render icon if icon is not provided', () => {
+    // act
+    fixture.detectChanges();
+    const iconComponent = fixture.debugElement.query(By.css('app-icon'));
+
+    // assert
+    expect(iconComponent).toBeNull();
+  });
 });
