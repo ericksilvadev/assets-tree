@@ -18,7 +18,7 @@ describe('TreeItemComponent', () => {
 
     fixture = TestBed.createComponent(TreeItemComponent);
     component = fixture.componentInstance;
-    const model = new TreeItemModel('MOTORS H12D - Stage 1', 'component', Status.Alert, Sensors.Energy);
+    const model = new TreeItemModel('MOTORS H12D - Stage 1', 'component', 0, Status.Alert, Sensors.Energy);
     fixture.componentRef.setInput('model', model);
     fixture.detectChanges();
   });
