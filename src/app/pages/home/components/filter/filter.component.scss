@@ -18,6 +18,7 @@
     span {
       color: $semantics-gray-medium-emphasis;
       transition: all 0.2s;
+      font-weight: 600;
 
       &::selection {
         background-color: transparent;
