@@ -72,4 +72,10 @@ describe('TreeItemComponent', () => {
     const arrow = fixture.nativeElement.querySelector('[data-test-id="tree-item-arrow"]');
     expect(arrow).not.toBeNull();
   });
+
+  it('should not display arrow if item has children', () => {
+    // assert
+    const arrow = fixture.nativeElement.querySelector('[data-test-id="tree-item-arrow"]');
+    expect(arrow).toBeNull();
+  });
 });

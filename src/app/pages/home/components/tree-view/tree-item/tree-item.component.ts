@@ -13,6 +13,7 @@ import { Status } from '../../../../../models/filter.model';
 export class TreeItemComponent {
   protected model: InputSignal<TreeItemModel> = input<TreeItemModel>(new TreeItemModel('', ''));
   protected sensorIconColorClass = computed(() => this.getSendorIconColorClasss());
+  protected hasChildren = computed(() => this.model().children.length > 0);
 
   private getSendorIconColorClasss(): string {
     return this.model().status === Status.Alert ? 'c-red' : 'c-green'
