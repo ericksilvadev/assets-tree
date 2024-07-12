@@ -36,4 +36,5 @@ describe('HomeComponent', () => {
     // assert
     expect(breadcrumbs.innerText).toContain(company.name);
   });
+
 });

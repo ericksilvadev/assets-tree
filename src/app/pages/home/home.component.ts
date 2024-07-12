@@ -1,13 +1,14 @@
 import { Component, OnDestroy } from '@angular/core';
-import { BreadcrumbsComponent } from "./components/breadcrumbs/breadcrumbs.component";
-import { AppContextService } from '../../services/app-context.service';
-import { Company } from '../../models/company.model';
 import { Subscription } from 'rxjs';
+import { Company } from '../../models/company.model';
+import { AppContextService } from '../../services/app-context.service';
+import { BreadcrumbsComponent } from "./components/breadcrumbs/breadcrumbs.component";
+import { FilterComponent } from "./components/filter/filter.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [BreadcrumbsComponent],
+  imports: [BreadcrumbsComponent, FilterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

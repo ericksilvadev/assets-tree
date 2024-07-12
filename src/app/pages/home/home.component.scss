@@ -13,4 +13,9 @@ main {
   border-radius: 0.4rem;
   padding: 1.6rem;
   flex: 1;
+
+  header {
+    display: flex;
+    justify-content: space-between;
+  }
 }

@@ -1,5 +1,9 @@
 <div class="container">
   <main>
-    <app-breadcrumbs [breadcrumbs]="['Ativos', selectedCompany.name]"></app-breadcrumbs>
+    <header>
+      <app-breadcrumbs [breadcrumbs]="['Ativos', selectedCompany.name]"></app-breadcrumbs>
+
+      <app-filter></app-filter>
+    </header>
   </main>
 </div>
