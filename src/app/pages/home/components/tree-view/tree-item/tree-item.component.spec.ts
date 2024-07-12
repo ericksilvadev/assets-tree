@@ -61,4 +61,15 @@ describe('TreeItemComponent', () => {
     const itemIcon = fixture.debugElement.query(By.css('[data-test-id="sensor-icon"]')).componentInstance as IconComponent;
     expect(itemIcon.class()).toContain('c-red');
   });
+
+  it('should display arrow if item has children', () => {
+    // arrange
+    const model = new TreeItemModel('MOTORS H12D - Stage 1', 'component', 0, Status.Alert, null, [new TreeItemModel('MOTORS H12D - Stage 1', 'component', 0, Status.Alert)]);
+    fixture.componentRef.setInput('model', model);
+    fixture.detectChanges();
+
+    // assert
+    const arrow = fixture.nativeElement.querySelector('[data-test-id="tree-item-arrow"]');
+    expect(arrow).not.toBeNull();
+  });
 });
