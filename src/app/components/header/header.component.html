@@ -7,8 +7,9 @@
 
   <nav>
     @for(company of companies(); track company.id) {
-    <app-button icon="org" [attr.data-test-id]="company.id" (click)="setCurrentCompany(company)">{{ company.name }}
-      Unit</app-button>
+    <app-button icon="org" [attr.data-test-id]="company.id" (click)="setCurrentCompany(company)">
+      {{ company.name }}
+    </app-button>
     }
   </nav>
 </header>
