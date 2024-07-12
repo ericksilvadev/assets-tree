@@ -3,6 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TreeItemComponent } from './tree-item.component';
 import { TreeItemModel } from './models/tree-item.model';
 import { Sensors, Status } from '../../../../../models/filter.model';
+import { By } from '@angular/platform-browser';
+import { IconComponent } from '../../../../../components/icon/icon.component';
 
 describe('TreeItemComponent', () => {
   let component: TreeItemComponent;
@@ -29,5 +31,11 @@ describe('TreeItemComponent', () => {
     // assert
     const itemName = fixture.nativeElement.querySelector('.tree-item-name');
     expect(itemName.textContent).toBe(component['model']().name);
+  });
+
+  it('should display item icon', () => {
+    // assert
+    const itemIcon = fixture.debugElement.query(By.css('app-icon')).componentInstance as IconComponent;
+    expect(itemIcon.name).toBe(component['model']().icon);
   });
 });
