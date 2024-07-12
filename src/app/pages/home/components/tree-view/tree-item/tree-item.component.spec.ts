@@ -44,4 +44,15 @@ describe('TreeItemComponent', () => {
     const itemIcon = fixture.debugElement.query(By.css('[data-test-id="sensor-icon"]')).componentInstance as IconComponent;
     expect(itemIcon.name).toBe(component['model']().sensor!);
   });
+
+  it('should not display sensor icon if sensor is not provided', () => {
+    // arrange
+    const model = new TreeItemModel('MOTORS H12D - Stage 1', 'component', 0, Status.Alert);
+    fixture.componentRef.setInput('model', model);
+    fixture.detectChanges();
+
+    // assert
+    const itemIcon = fixture.debugElement.query(By.css('[data-test-id="sensor-icon"]'));
+    expect(itemIcon).toBeNull();
+  });
 });

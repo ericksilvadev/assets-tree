@@ -1,5 +1,7 @@
 <span class="tree-item">
   <app-icon [name]="model().icon" data-test-id="item-icon"></app-icon>
   <label class="tree-item-name">{{ model().name }}</label>
+  @if (model().sensor) {
   <app-icon [name]="model().sensor!" data-test-id="sensor-icon"></app-icon>
+  }
 </span>
