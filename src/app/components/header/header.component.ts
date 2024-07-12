@@ -20,14 +20,10 @@ export class HeaderComponent implements OnDestroy {
 
   private _companySubscription: Subscription;
 
-  constructor(private companyService: CompanyService, private contextService: AppContextService) {
+  constructor(private companyService: CompanyService, contextService: AppContextService) {
     this._companySubscription = contextService.currentCompany.subscribe((company) => {
       this.currentCompany.set(company);
     });
-  }
-
-  protected setCurrentCompany(company: Company): void {
-    this.contextService.setCurrentCompany(company);
   }
 
   ngOnDestroy(): void {

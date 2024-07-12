@@ -2,10 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { signal } from '@angular/core';
-import { By } from '@angular/platform-browser';
 import { Company } from '../../models/company.model';
-import { AppContextService } from '../../services/app-context.service';
 import { HeaderComponent } from './header.component';
+import { AppContextService } from '../../services/app-context.service';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -55,30 +54,5 @@ describe('HeaderComponent', () => {
 
     // assert
     expect(component['currentCompany']()).toEqual(company);
-  });
-
-  it('should set context current company on navigate', () => {
-    // arrange
-    const companies = [
-      new Company('1', 'Company 1'),
-      new Company('2', 'Company 2')
-    ];
-
-    const contextService = TestBed.inject(AppContextService);
-    const setCompanySpy = spyOn(contextService, 'setCurrentCompany').and.callThrough();
-
-    contextService.currentCompany.next(companies[0]);
-    component['companies'] = signal(companies);
-
-    fixture.detectChanges();
-
-    const secondCompanyButton = fixture.debugElement.query(By.css(`nav app-button[data-test-id="${companies[1].id}"]`)).nativeElement as HTMLButtonElement;
-
-    // act
-    secondCompanyButton.click();
-
-    // assert
-    expect(setCompanySpy).toHaveBeenCalledWith(companies[1]);
-    expect(component['currentCompany']()).toEqual(companies[1]);
   });
 });
