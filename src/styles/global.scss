@@ -1,3 +1,7 @@
+:root {
+  --header-height: 4.8rem;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,6 +11,10 @@
 
 html {
   font-size: 62.5%;
+}
+
+body {
+  background-color: $semantics-gray-low-faded;
 }
 
 ul {
