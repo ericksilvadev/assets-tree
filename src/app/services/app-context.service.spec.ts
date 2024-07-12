@@ -37,6 +37,6 @@ describe('AppContextService', () => {
     service.setCurrentCompany(company);
 
     // assert
-    expect(navigateSpy).toHaveBeenCalledWith(['/company', company.id]);
+    expect(navigateSpy).toHaveBeenCalledWith(['company', company.id]);
   });
 });
