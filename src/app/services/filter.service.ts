@@ -14,4 +14,12 @@ export class FilterService {
   public setFilter(filter: FilterModel) {
     this.filter.next(filter);
   }
+
+  public setSearchFilter(search: string) {
+    const filter = { ...this.filter.value };
+
+    filter.search = search;
+
+    this.setFilter(filter);
+  }
 }
