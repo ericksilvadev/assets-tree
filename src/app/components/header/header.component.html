@@ -6,8 +6,8 @@
   </svg>
 
   <nav>
-    <app-button icon="org">Apex Unit</app-button>
-    <app-button icon="org">Apex Unit</app-button>
-    <app-button icon="org">Apex Unit</app-button>
+    @for(company of companies(); track company.id) {
+    <app-button icon="org">{{ company.name }} Unit</app-button>
+    }
   </nav>
 </header>
