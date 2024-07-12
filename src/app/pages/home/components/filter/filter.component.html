@@ -1,4 +1,4 @@
-<div class="filters">
+<div class="filters-wrapper">
   <div class="filter">
     <label for="energy-sensor" [class.active]="energyChecked()">
       <app-icon name="thunderbolt"></app-icon>
@@ -10,7 +10,7 @@
 
   <div class="filter">
     <label for="critical-status" [class.active]="criticalChecked()">
-      <app-icon name="exclamation-triangle"></app-icon>
+      <app-icon name="info"></app-icon>
       <span>Status Crítico</span>
     </label>
     <input #criticalCheckbox type="checkbox" [checked]="criticalChecked()"
