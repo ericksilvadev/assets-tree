@@ -14,6 +14,6 @@ export class AppContextService {
 
   public setCurrentCompany(company: Company) {
     this.currentCompany.next(company);
-    this.router.navigate(['/company', company.id]);
+    this.router.navigate(['company', company.id]);
   }
 }
