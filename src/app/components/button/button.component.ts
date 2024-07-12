@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, Input } from '@angular/core';
 import { IconComponent } from "../icon/icon.component";
 
 @Component({
@@ -9,5 +9,5 @@ import { IconComponent } from "../icon/icon.component";
   styleUrl: './button.component.scss'
 })
 export class ButtonComponent {
-  @Input() icon: string = '';
+  icon = input('');
 }

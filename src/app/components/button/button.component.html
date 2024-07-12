@@ -1,6 +1,6 @@
 <button>
-  @if (icon) {
-  <app-icon [name]="icon"></app-icon>
+  @if (icon()) {
+  <app-icon [name]="icon()"></app-icon>
   }
   <ng-content></ng-content>
 </button>
