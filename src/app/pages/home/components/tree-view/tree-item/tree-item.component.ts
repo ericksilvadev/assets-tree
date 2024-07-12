@@ -11,7 +11,8 @@ import { Status } from '../../../../../models/filter.model';
   styleUrl: './tree-item.component.scss'
 })
 export class TreeItemComponent {
-  protected model: InputSignal<TreeItemModel> = input<TreeItemModel>(new TreeItemModel('', ''));
+  protected model = input<TreeItemModel>(new TreeItemModel('', '', ''));
+  protected indent = input<number>(0);
   protected sensorIconColorClass = computed(() => this.getSendorIconColorClasss());
   protected hasChildren = computed(() => this.model().children.length > 0);
 

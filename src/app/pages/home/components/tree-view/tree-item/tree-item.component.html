@@ -11,3 +11,6 @@
   <app-icon [name]="model().sensor!" [class]="sensorIconColorClass()" data-test-id="sensor-icon"></app-icon>
   }
 </span>
+@for(child of model().children; track child.id) {
+<app-tree-item [model]="child" [indent]="indent() + 1"></app-tree-item>
+}
