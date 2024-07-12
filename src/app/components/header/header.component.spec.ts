@@ -4,6 +4,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { signal } from '@angular/core';
 import { Company } from '../../models/company.model';
 import { HeaderComponent } from './header.component';
+import { AppContextService } from '../../services/app-context.service';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -40,5 +41,18 @@ describe('HeaderComponent', () => {
     // assert
     expect(companyButtons[0].innerText).toContain(companies[0].name);
     expect(companyButtons[1].innerText).toContain(companies[1].name);
+  });
+
+  it('should set current company when context company changes', () => {
+    // arrange
+    const company = new Company('1', 'Company 1');
+    const contextService = TestBed.inject(AppContextService);
+    contextService.currentCompany.next(company);
+
+    // act
+    fixture.detectChanges();
+
+    // assert
+    expect(component['currentCompany']()).toEqual(company);
   });
 });

@@ -1,6 +1,7 @@
-import { Component, computed, signal, Signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, computed, OnDestroy, signal, Signal, WritableSignal } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Company } from '../../models/company.model';
+import { AppContextService } from '../../services/app-context.service';
 import { CompanyService } from '../../services/company.service';
 import { ButtonComponent } from '../button/button.component';
 
@@ -11,9 +12,21 @@ import { ButtonComponent } from '../button/button.component';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnDestroy {
 
   protected companies: Signal<Company[]> = computed(() => this.companyService.companies());
 
-  constructor(private companyService: CompanyService) { }
+  protected currentCompany: WritableSignal<Company> = signal(new Company('', ''));
+
+  private _companySubscription: Subscription;
+
+  constructor(private companyService: CompanyService, contextService: AppContextService) {
+    this._companySubscription = contextService.currentCompany.subscribe((company) => {
+      this.currentCompany.set(company);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this._companySubscription.unsubscribe();
+  }
 }
