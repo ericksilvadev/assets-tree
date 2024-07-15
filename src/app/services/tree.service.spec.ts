@@ -8,18 +8,21 @@ import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LocationModel } from '../models/locations.model';
 import { AppContextService } from './app-context.service';
+import { TreeItemModel } from '../pages/home/components/tree-view/tree-item/models/tree-item.model';
 
 describe('TreeService', () => {
   let service: TreeService;
-  let asset: AssetModel;
-  let location: LocationModel;
+  let items: TreeItemModel[];
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule]
     });
-    asset = new AssetModel('1', 'MOTORS H12D - Stage 1', '656733b1664c41001e91d9ed', '656a07c3f2d4a1001e2144c5', Sensors.Vibration, Status.Operating, 'MTC052', 'QHI640');
-    location = new LocationModel('1', 'CHARCOAL STORAGE SECTOR', '65674204664c41001e91ecb4');
+    items = [
+      new TreeItemModel('1', 'Asset', 'asset'),
+      new TreeItemModel('2', 'Location', 'location'),
+      new TreeItemModel('3', 'Component', 'component')
+    ]
     service = TestBed.inject(TreeService);
   });
 
@@ -27,41 +30,26 @@ describe('TreeService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get tree assets', () => {
+  it('should get tree items', () => {
     // arrange
-    const assets = [asset]
     const repository = TestBed.inject(TreeRepository);
-    const spy = spyOn(repository, 'getAssets').and.returnValue(of(assets));
+    const spyGetItems = spyOn(repository, 'getItems').and.returnValue(of(items));
 
     // act
     service.getAssets('');
 
     // assert
-    expect(spy).toHaveBeenCalled();
+    expect(spyGetItems).toHaveBeenCalled();
   });
 
-  it('should get tree locations', () => {
+  it('should set items on company change', () => {
     // arrange
     const repository = TestBed.inject(TreeRepository);
-    const spy = spyOn(repository, 'getLocations').and.returnValue(of([location]));
-
-    // act
-    service.getLocations('');
-
-    // assert
-    expect(spy).toHaveBeenCalled();
-  });
-
-  it('should set assets and locations on company change', () => {
-    // arrange
-    const repository = TestBed.inject(TreeRepository);
-    const spyAssets = spyOn(repository, 'getAssets').and.returnValue(of([asset]));
-    const spyLocations = spyOn(repository, 'getLocations').and.returnValue(of([]));
+    const spyGetItems = spyOn(repository, 'getItems').and.returnValue(of(items));
     const appContext = TestBed.inject(AppContextService);
     appContext.currentCompany.next({ id: '1', name: 'Company' });
 
     // assert
-    expect(spyAssets).toHaveBeenCalled();
-    expect(spyLocations).toHaveBeenCalled();
+    expect(spyGetItems).toHaveBeenCalled();
   });
 });
