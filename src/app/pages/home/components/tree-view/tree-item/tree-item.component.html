@@ -1,9 +1,9 @@
 <span class="tree-item">
   @if(hasChildren()){
-  <app-icon name="arrow-down" data-test-id="tree-item-arrow"></app-icon>
+  <app-icon name="arrowDown" data-test-id="tree-item-arrow"></app-icon>
   }
 
-  <app-icon [name]="model().icon" data-test-id="item-icon"></app-icon>
+  <app-icon [name]="model().type" data-test-id="item-icon"></app-icon>
 
   <label class="tree-item-name">{{ model().name }}</label>
 

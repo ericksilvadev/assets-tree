@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from '../../environment/environment';
 import { TreeItemModel } from '../pages/home/components/tree-view/tree-item/models/tree-item.model';
 
@@ -9,12 +9,13 @@ import { TreeItemModel } from '../pages/home/components/tree-view/tree-item/mode
 })
 export class TreeRepository {
 
-  private baseUrl = `${environment.baseBffApiUrl}/companies/662fd0ee639069143a8fc387/tree`;
+  private baseUrl = `${environment.baseBffApiUrl}/companies/`;
 
   constructor(private http: HttpClient) { }
 
   public getItems(companyId: string): Observable<TreeItemModel[]> {
-    return this.http.get<TreeItemModel[]>(`${this.baseUrl}${companyId}/assets`);
+    if (!companyId) return of([]);
+    return this.http.get<TreeItemModel[]>(`${this.baseUrl}${companyId}/tree`);
   }
 
 }

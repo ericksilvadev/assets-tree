@@ -20,13 +20,11 @@ export class TreeService implements OnDestroy {
   }
 
   private setItems(companyId: string) {
+    if (!companyId) return;
+
     this.treeRepository.getItems(companyId).subscribe(assets => {
       this.items.set(assets);
     });
-  }
-
-  public getAssets(companyId: string): Observable<TreeItemModel[]> {
-    return this.treeRepository.getItems(companyId);
   }
 
   ngOnDestroy(): void {

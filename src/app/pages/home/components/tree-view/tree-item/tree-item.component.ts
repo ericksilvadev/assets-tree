@@ -2,6 +2,7 @@ import { Component, computed, input, InputSignal } from '@angular/core';
 import { TreeItemModel } from './models/tree-item.model';
 import { IconComponent } from "../../../../../components/icon/icon.component";
 import { Status } from '../../../../../models/filter.model';
+import { TreeItemType } from './models/tree-item.enum';
 
 @Component({
   selector: 'app-tree-item',
@@ -11,7 +12,7 @@ import { Status } from '../../../../../models/filter.model';
   styleUrl: './tree-item.component.scss'
 })
 export class TreeItemComponent {
-  protected model = input<TreeItemModel>(new TreeItemModel('', '', ''));
+  public model = input<TreeItemModel>(new TreeItemModel('', '', TreeItemType.Location, null, null));
   protected indent = input<number>(0);
   protected sensorIconColorClass = computed(() => this.getSendorIconColorClasss());
   protected hasChildren = computed(() => this.model().children.length > 0);
