@@ -1,6 +1,6 @@
-import { Sensors, Status } from "./filter.model";
+import { Sensors, Status } from "../../../app/models/filter.model";
 
-export class AssetModel {
+export class AssetEntity {
   constructor(
     public id: string,
     public name: string,

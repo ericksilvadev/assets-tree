@@ -1,14 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TreeService } from './tree.service';
-import { TreeRepository } from '../repositories/tree.repository';
-import { AssetModel } from '../models/assets.model';
-import { Sensors, Status } from '../models/filter.model';
-import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { LocationModel } from '../models/locations.model';
-import { AppContextService } from './app-context.service';
+import { of } from 'rxjs';
 import { TreeItemModel } from '../pages/home/components/tree-view/tree-item/models/tree-item.model';
+import { TreeRepository } from '../repositories/tree.repository';
+import { AppContextService } from './app-context.service';
+import { TreeService } from './tree.service';
 
 describe('TreeService', () => {
   let service: TreeService;
