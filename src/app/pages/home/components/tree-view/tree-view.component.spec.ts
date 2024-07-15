@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TreeViewComponent } from './tree-view.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('TreeViewComponent', () => {
   let component: TreeViewComponent;
@@ -8,10 +9,10 @@ describe('TreeViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TreeViewComponent]
+      imports: [TreeViewComponent, HttpClientTestingModule]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(TreeViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
