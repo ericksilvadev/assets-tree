@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, signal, WritableSignal } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { TreeItemModel } from '../pages/home/components/tree-view/tree-item/models/tree-item.model';
 import { TreeRepository } from '../repositories/tree.repository';
 import { AppContextService } from './app-context.service';

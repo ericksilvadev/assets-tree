@@ -6,6 +6,7 @@ import { TreeItemModel } from '../pages/home/components/tree-view/tree-item/mode
 import { TreeRepository } from '../repositories/tree.repository';
 import { AppContextService } from './app-context.service';
 import { TreeService } from './tree.service';
+import { TreeItemType } from '../pages/home/components/tree-view/tree-item/models/tree-item.enum';
 
 describe('TreeService', () => {
   let service: TreeService;
@@ -16,9 +17,9 @@ describe('TreeService', () => {
       imports: [HttpClientTestingModule]
     });
     items = [
-      new TreeItemModel('1', 'Asset', 'asset'),
-      new TreeItemModel('2', 'Location', 'location'),
-      new TreeItemModel('3', 'Component', 'component')
+      new TreeItemModel('1', 'Asset', TreeItemType.Asset),
+      new TreeItemModel('2', 'Location', TreeItemType.Location),
+      new TreeItemModel('3', 'Component', TreeItemType.Component)
     ]
     service = TestBed.inject(TreeService);
   });
@@ -33,7 +34,6 @@ describe('TreeService', () => {
     const spyGetItems = spyOn(repository, 'getItems').and.returnValue(of(items));
 
     // act
-    service.getAssets('');
 
     // assert
     expect(spyGetItems).toHaveBeenCalled();

@@ -1,4 +1,4 @@
-import { Component, input, Input, InputSignal } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { IconComponent } from "../icon/icon.component";
 
 @Component({
