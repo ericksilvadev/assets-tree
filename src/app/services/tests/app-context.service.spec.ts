@@ -2,8 +2,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { Company } from '../models/company.model';
-import { AppContextService } from './app-context.service';
+import { Company } from '../../models/company.model';
+import { AppContextService } from '../app-context.service';
 
 describe('AppContextService', () => {
   let service: AppContextService;

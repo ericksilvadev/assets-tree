@@ -2,11 +2,11 @@ import { TestBed } from '@angular/core/testing';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
-import { TreeItemModel } from '../pages/home/components/tree-view/tree-item/models/tree-item.model';
-import { TreeRepository } from '../repositories/tree.repository';
-import { AppContextService } from './app-context.service';
-import { TreeService } from './tree.service';
-import { TreeItemType } from '../pages/home/components/tree-view/tree-item/models/tree-item.enum';
+import { TreeItemModel } from '../../pages/home/components/tree-view/tree-item/models/tree-item.model';
+import { TreeRepository } from '../../repositories/tree.repository';
+import { AppContextService } from '../app-context.service';
+import { TreeService } from '../tree.service';
+import { TreeItemType } from '../../pages/home/components/tree-view/tree-item/models/tree-item.enum';
 
 describe('TreeService', () => {
   let service: TreeService;

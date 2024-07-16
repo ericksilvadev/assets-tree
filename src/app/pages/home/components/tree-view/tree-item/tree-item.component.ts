@@ -34,7 +34,6 @@ export class TreeItemComponent {
   }
 
   private getSensorIconColorClasss(): string {
-    console.log(this.model().status === Status.Alert ? 'sensor-alert' : 'sensor-normal');
     return this.model().status === Status.Alert ? 'sensor-alert' : 'sensor-normal';
   }
 
