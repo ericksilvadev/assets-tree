@@ -11,18 +11,15 @@ export class GetTreeItemsService {
   private itemMap = new Map<string, TreeItemModel>();
   private locations: LocationEntity[] = [];
   private assets: AssetEntity[] = [];
-  private root: TreeItemModel[] = [];
+  private items: TreeItemModel[] = [];
+  private companyId: string = '';
 
-  public async getItems(companyId: string): Promise<TreeItemModel[]> {
+  public async getItems(companyId: string, skip: number = 0, take: number = 5): Promise<TreeItemModel[]> {
     this.assets = await this.getAssets(companyId);
     this.locations = await this.getLocations(companyId);
+    this.setup(companyId);
 
-    this.resetItems();
-    this.setLocations();
-    this.setAssets();
-    this.setRoot();
-
-    return this.root;
+    return this.items.slice(skip, skip + take);
   }
 
   private async getAssets(companyId: string): Promise<AssetEntity[]> {
@@ -33,8 +30,18 @@ export class GetTreeItemsService {
     return this.companyRepository.getLocations(companyId);
   }
 
+  private setup(companyId: string) {
+    if (companyId != this.companyId) {
+      this.companyId = companyId;
+      this.resetItems();
+      this.setLocations();
+      this.setAssets();
+      this.setRoot();
+    }
+  }
+
   private resetItems() {
-    this.root = [];
+    this.items = [];
     this.itemMap.clear();
   }
 
@@ -89,7 +96,7 @@ export class GetTreeItemsService {
   private setRoot(): void {
     this.itemMap.forEach(item => {
       if (this.isRootItem(item)) {
-        this.root.push(item);
+        this.items.push(item);
       }
     });
   }

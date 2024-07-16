@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../environment/environment';
@@ -13,9 +13,13 @@ export class TreeRepository {
 
   constructor(private http: HttpClient) { }
 
-  public getItems(companyId: string): Observable<TreeItemModel[]> {
+  public getItems(companyId: string, skip: number = 0, take: number = 5): Observable<TreeItemModel[]> {
     if (!companyId) return of([]);
-    return this.http.get<TreeItemModel[]>(`${this.baseUrl}${companyId}/tree`);
-  }
 
+    const params = new HttpParams()
+      .set('skip', skip.toString())
+      .set('take', take.toString());
+
+    return this.http.get<TreeItemModel[]>(`${this.baseUrl}${companyId}/tree`, { params });
+  }
 }
