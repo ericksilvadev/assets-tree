@@ -1,5 +1,8 @@
 <details #details>
   <summary class="tree-item" (click)="getChildren()">
+    @for (_ of [].constructor(indent()); track indent()) {
+    <div class="tree-item-indent"></div>
+    }
     @if(model().hasChildren) {
     <app-icon name="arrowDown" class="tree-item-arrow" data-test-id="tree-item-arrow"></app-icon>
     }

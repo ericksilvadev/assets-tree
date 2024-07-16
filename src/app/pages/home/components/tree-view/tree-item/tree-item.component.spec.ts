@@ -99,4 +99,18 @@ describe('TreeItemComponent', () => {
     expect(children[0].componentInstance['model']()).toBe(child);
     expect(children[0].componentInstance['indent']()).toBe(1);
   });
+
+  it('should indent correctly', () => {
+    // arrange
+    const indent = 2;
+    fixture.componentRef.setInput('indent', indent);
+
+    // act
+    fixture.detectChanges();
+
+    // assert
+    const indentElements = fixture.nativeElement.querySelectorAll('.tree-item-indent');
+
+    expect(indentElements.length).toBe(indent);
+  });
 });
