@@ -14,11 +14,12 @@ export class GetTreeItemsService {
   private root: TreeItemModel[] = [];
 
   public async getItems(companyId: string): Promise<TreeItemModel[]> {
-    const assets = await this.getAssets(companyId);
-    const locations = await this.getLocations(companyId);
+    this.assets = await this.getAssets(companyId);
+    this.locations = await this.getLocations(companyId);
 
-    this.setLocations(locations);
-    this.setAssets(assets);
+    this.resetItems();
+    this.setLocations();
+    this.setAssets();
     this.setRoot();
 
     return this.root;
@@ -32,9 +33,13 @@ export class GetTreeItemsService {
     return this.companyRepository.getLocations(companyId);
   }
 
-  private setLocations(locations: LocationEntity[]): void {
-    this.locations = locations;
-    for (const location of locations) {
+  private resetItems() {
+    this.root = [];
+    this.itemMap.clear();
+  }
+
+  private setLocations(): void {
+    for (const location of this.locations) {
       const item = this.getSetItem(location.id, location.name, TreeItemType.Location);
       if (location.parentId) {
         const parent = this.getSetItem(location.parentId, '', TreeItemType.Location);
@@ -43,9 +48,8 @@ export class GetTreeItemsService {
     }
   }
 
-  private setAssets(assets: AssetEntity[]): void {
-    this.assets = assets;
-    for (const asset of assets) {
+  private setAssets(): void {
+    for (const asset of this.assets) {
       const item = this.getSetItem(asset.id, asset.name, this.getAssetType(asset), asset.status, asset.sensorType);
 
       if (asset.parentId) {
