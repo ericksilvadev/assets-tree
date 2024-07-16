@@ -63,9 +63,10 @@ describe('TreeItemComponent', () => {
   it('should set sensor icon red if status is alert', () => {
     // arrange
     const expectedClass = 'sensor-alert';
+
     // assert
-    const itemIcon = fixture.debugElement.query(By.css('[data-test-id="sensor-icon"]')).componentInstance as IconComponent;
-    expect(itemIcon.class()).toContain(expectedClass);
+    const itemIcon = fixture.debugElement.query(By.css('[data-test-id="sensor-icon"]')).nativeElement;
+    expect(itemIcon.classList).toContain(expectedClass);
   });
 
   it('should display arrow if item has children', () => {
