@@ -1,12 +1,12 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { CommonEngine } from '@angular/ssr';
 import express from 'express';
-import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import bootstrap from '../main.server';
 import { TreeController } from './bff/tree.controller';
 import { GetTreeItemsService } from './domain/useCases/get-tree-items.service';
-import { CompanyRepository } from './repositories/company.repository';
+import { AssetsAndLocationsRepository } from './repositories/assets-and-locations.repository';
 
 export function app(): express.Express {
   const server = express();
@@ -18,6 +18,12 @@ export function app(): express.Express {
 
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
+
+  const assetsAndLocationsRepository = new AssetsAndLocationsRepository();
+  const getTreeItemsService = new GetTreeItemsService(assetsAndLocationsRepository);
+  const treeController = new TreeController(getTreeItemsService);
+
+  server.get('/api/companies/:id/tree', (req, res) => treeController.getTreeItems(req, res));
 
   server.get('*.*', express.static(browserDistFolder, {
     maxAge: '1y'
