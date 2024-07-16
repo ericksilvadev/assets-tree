@@ -1,5 +1,5 @@
-<span class="tree-item">
-  @if(hasChildren()){
+<span class="tree-item" (click)="getChildren()">
+  @if(model().hasChildren){
   <app-icon name="arrowDown" data-test-id="tree-item-arrow"></app-icon>
   }
 
@@ -11,6 +11,6 @@
   <app-icon [name]="model().sensor!" [class]="sensorIconColorClass()" data-test-id="sensor-icon"></app-icon>
   }
 </span>
-@for(child of model().children; track child.id) {
+@for(child of children(); track child.id) {
 <app-tree-item [model]="child" [indent]="indent() + 1"></app-tree-item>
 }

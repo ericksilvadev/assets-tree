@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, signal, WritableSignal } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { TreeItemModel } from '../pages/home/components/tree-view/tree-item/models/tree-item.model';
 import { TreeRepository } from '../repositories/tree.repository';
 import { AppContextService } from './app-context.service';
@@ -25,6 +25,10 @@ export class TreeService implements OnDestroy {
     this.treeRepository.getItems(companyId).subscribe(assets => {
       this.items.set(assets);
     });
+  }
+
+  public getChildren(parentId: string): Observable<TreeItemModel[]> {
+    return this.treeRepository.getChildren(parentId);
   }
 
   ngOnDestroy(): void {

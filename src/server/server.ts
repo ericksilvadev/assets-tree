@@ -23,7 +23,8 @@ export function app(): express.Express {
   const getTreeItemsService = new GetTreeItemsService(assetsAndLocationsRepository);
   const treeController = new TreeController(getTreeItemsService);
 
-  server.get('/api/companies/:id/tree', (req, res) => treeController.getTreeItems(req, res));
+  server.get('/api/tree/:id', (req, res) => treeController.getTree(req, res));
+  server.get('/api/children/:parentId', (req, res) => treeController.getChildren(req, res));
 
   server.get('*.*', express.static(browserDistFolder, {
     maxAge: '1y'

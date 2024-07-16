@@ -82,4 +82,17 @@ export class GetTreeItemsService {
   private isRootItem(item: TreeItemModel): boolean {
     return !this.itemMap.get(item.id)?.parentId;
   }
+
+  public getChildren(parentId: string, skip: number = 0, take: number = 30): TreeItemModel[] {
+    const children: TreeItemModel[] = [];
+
+    for (let item of this.itemMap.values()) {
+      if (item.parentId === parentId) {
+        item.hasChildren = this.parentIds.has(item.id);
+        children.push(item);
+      }
+    }
+
+    return children.slice(skip, skip + take);
+  }
 }

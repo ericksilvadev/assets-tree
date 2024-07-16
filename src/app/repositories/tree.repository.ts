@@ -9,7 +9,7 @@ import { TreeItemModel } from '../pages/home/components/tree-view/tree-item/mode
 })
 export class TreeRepository {
 
-  private baseUrl = `${environment.baseBffApiUrl}/companies/`;
+  private baseUrl = `${environment.baseBffApiUrl}`;
 
   constructor(private http: HttpClient) { }
 
@@ -20,6 +20,16 @@ export class TreeRepository {
       .set('skip', skip.toString())
       .set('take', take.toString());
 
-    return this.http.get<TreeItemModel[]>(`${this.baseUrl}${companyId}/tree`, { params });
+    return this.http.get<TreeItemModel[]>(`${this.baseUrl}/tree/${companyId}`, { params });
+  }
+
+  public getChildren(parentId: string, skip: number = 0, take: number = 30): Observable<TreeItemModel[]> {
+    if (!parentId) return of([]);
+
+    const params = new HttpParams()
+      .set('skip', skip.toString())
+      .set('take', take.toString());
+
+    return this.http.get<TreeItemModel[]>(`${environment.baseBffApiUrl}/children/${parentId}`, { params });
   }
 }
