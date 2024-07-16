@@ -1,16 +1,20 @@
-<span class="tree-item" (click)="getChildren()">
-  @if(model().hasChildren){
-  <app-icon name="arrowDown" data-test-id="tree-item-arrow"></app-icon>
+<details #details>
+  <summary class="tree-item" (click)="getChildren()">
+    @if(model().hasChildren) {
+    <app-icon name="arrowDown" class="tree-item-arrow" data-test-id="tree-item-arrow"></app-icon>
+    }
+
+    <app-icon [name]="model().type" class="item-icon" data-test-id="item-icon"></app-icon>
+
+    <label class="tree-item-name">{{ model().name }}</label>
+
+    @if(model().sensor) {
+    <app-icon [name]="sensorIcon()" [class]="sensorIconColorClass() + ' sensor-icon'"
+      data-test-id="sensor-icon"></app-icon>
+    }
+  </summary>
+
+  @for(child of children(); track child.id) {
+  <app-tree-item [model]="child" [indent]="indent() + 1"></app-tree-item>
   }
-
-  <app-icon [name]="model().type" data-test-id="item-icon"></app-icon>
-
-  <label class="tree-item-name">{{ model().name }}</label>
-
-  @if(model().sensor) {
-  <app-icon [name]="model().sensor!" [class]="sensorIconColorClass()" data-test-id="sensor-icon"></app-icon>
-  }
-</span>
-@for(child of children(); track child.id) {
-<app-tree-item [model]="child" [indent]="indent() + 1"></app-tree-item>
-}
+</details>
