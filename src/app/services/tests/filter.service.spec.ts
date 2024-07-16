@@ -17,7 +17,7 @@ describe('FilterService', () => {
 
   it('should set filter', () => {
     // arrange
-    const filter = new FilterModel('search', [Sensors.Energy], [Status.Alert]);
+    const filter = new FilterModel('search', 0, 0);
 
     // act
     service.setFilter(filter);

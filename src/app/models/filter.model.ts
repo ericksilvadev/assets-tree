@@ -1,13 +1,13 @@
 export enum Sensors {
-  Energy = 'energy',
-  Vibration = 'vibration',
+  Energy = 1,
+  Vibration = 2,
 }
 
 export enum Status {
-  Operating = 'operating',
-  Alert = 'alert',
+  Operating = 1,
+  Alert = 2,
 }
 
 export class FilterModel {
-  constructor(public search: string = '', public sensors: Sensors[] = [], public status: Status[] = []) { }
+  constructor(public search: string = '', public sensors: number = 0, public status: number = 0) { }
 }

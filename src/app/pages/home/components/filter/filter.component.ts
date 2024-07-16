@@ -32,11 +32,11 @@ export class FilterComponent implements OnDestroy {
   }
 
   private updateEnergySensorCheck(filter: FilterModel) {
-    this.energyChecked.set(filter.sensors.includes(Sensors.Energy));
+    this.energyChecked.set(Boolean(filter.sensors & Sensors.Energy));
   }
 
   private updateCriticalStatusCheck(filter: FilterModel) {
-    this.criticalChecked.set(filter.status.includes(Status.Alert));
+    this.criticalChecked.set(Boolean(filter.status & Status.Alert));
   }
 
   protected onEnergyFilterChange(checked: boolean) {
@@ -47,9 +47,9 @@ export class FilterComponent implements OnDestroy {
 
   private updateSensorFilter(filter: FilterModel, checked: boolean) {
     if (checked) {
-      filter.sensors.push(Sensors.Energy);
+      filter.sensors += Sensors.Energy;
     } else {
-      filter.sensors = filter.sensors.filter(sensor => sensor !== Sensors.Energy);
+      filter.sensors -= Sensors.Energy;
     }
 
     this.filterService.setFilter(filter);
@@ -61,11 +61,11 @@ export class FilterComponent implements OnDestroy {
     this.updateStatusFilter(checked, filter);
   }
 
-  private updateStatusFilter(checked: boolean, filter: { search: string; sensors: Sensors[]; status: Status[]; }) {
+  private updateStatusFilter(checked: boolean, filter: FilterModel) {
     if (checked) {
-      filter.status.push(Status.Alert);
+      filter.status += Status.Alert;
     } else {
-      filter.status = filter.status.filter(status => status !== Status.Alert);
+      filter.status -= Status.Alert;
     }
 
     this.filterService.setFilter(filter);

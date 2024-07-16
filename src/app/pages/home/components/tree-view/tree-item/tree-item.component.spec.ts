@@ -51,7 +51,7 @@ describe('TreeItemComponent', () => {
 
   it('should not display sensor icon if sensor is not provided', () => {
     // arrange
-    const model = new TreeItemModel('1', 'MOTORS H12D - Stage 1', TreeItemType.Component, Status.Alert);
+    const model = new TreeItemModel('1', 'MOTORS H12D - Stage 1', TreeItemType.Component, '', Status.Alert);
     fixture.componentRef.setInput('model', model);
     fixture.detectChanges();
 
@@ -71,7 +71,7 @@ describe('TreeItemComponent', () => {
 
   it('should display arrow if item has children', () => {
     // arrange
-    const model = new TreeItemModel('1', 'MOTORS H12D - Stage 1', TreeItemType.Component, Status.Alert, null, null, [], true);
+    const model = new TreeItemModel('1', 'MOTORS H12D - Stage 1', TreeItemType.Component, '', Status.Alert, null, [], true);
     fixture.componentRef.setInput('model', model);
     fixture.detectChanges();
 
@@ -88,8 +88,8 @@ describe('TreeItemComponent', () => {
 
   it('should render children if item has children', () => {
     // arrange
-    const child = new TreeItemModel('2', 'MOTORS H12D - Stage 2', TreeItemType.Component, Status.Alert);
-    const model = new TreeItemModel('1', 'MOTORS H12D - Stage 1', TreeItemType.Component, Status.Alert, null, null);
+    const child = new TreeItemModel('2', 'MOTORS H12D - Stage 2', TreeItemType.Component, '', Status.Alert);
+    const model = new TreeItemModel('1', 'MOTORS H12D - Stage 1', TreeItemType.Component, '', Status.Alert, null);
     component['children'].set([child]);
     fixture.componentRef.setInput('model', model);
     fixture.detectChanges();
