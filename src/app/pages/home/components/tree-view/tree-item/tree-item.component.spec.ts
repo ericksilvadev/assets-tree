@@ -5,6 +5,8 @@ import { TreeItemModel } from './models/tree-item.model';
 import { Sensors, Status } from '../../../../../models/filter.model';
 import { By } from '@angular/platform-browser';
 import { IconComponent } from '../../../../../components/icon/icon.component';
+import { TreeItemType } from './models/tree-item.enum';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('TreeItemComponent', () => {
   let component: TreeItemComponent;
@@ -12,13 +14,13 @@ describe('TreeItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TreeItemComponent]
+      imports: [TreeItemComponent, HttpClientTestingModule]
     })
       .compileComponents();
 
     fixture = TestBed.createComponent(TreeItemComponent);
     component = fixture.componentInstance;
-    const model = new TreeItemModel('1', 'MOTORS H12D - Stage 1', 'component', Status.Alert, Sensors.Energy);
+    const model = new TreeItemModel('1', 'MOTORS H12D - Stage 1', TreeItemType.Component, '', Status.Alert, Sensors.Energy);
     fixture.componentRef.setInput('model', model);
     fixture.detectChanges();
   });
@@ -36,18 +38,20 @@ describe('TreeItemComponent', () => {
   it('should display item icon', () => {
     // assert
     const itemIcon = fixture.debugElement.query(By.css('[data-test-id="item-icon"]')).componentInstance as IconComponent;
-    expect(itemIcon.name()).toBe(component['model']().icon);
+    expect(itemIcon.name()).toBe(component['model']().type);
   });
 
   it('should display item sensor icon', () => {
+    // arrange
+    const expectedIcon = 'bolt';
     // assert
     const itemIcon = fixture.debugElement.query(By.css('[data-test-id="sensor-icon"]')).componentInstance as IconComponent;
-    expect(itemIcon.name()).toBe(component['model']().sensor!);
+    expect(itemIcon.name()).toBe(expectedIcon);
   });
 
   it('should not display sensor icon if sensor is not provided', () => {
     // arrange
-    const model = new TreeItemModel('1', 'MOTORS H12D - Stage 1', 'component', Status.Alert);
+    const model = new TreeItemModel('1', 'MOTORS H12D - Stage 1', TreeItemType.Component, Status.Alert);
     fixture.componentRef.setInput('model', model);
     fixture.detectChanges();
 
@@ -57,14 +61,16 @@ describe('TreeItemComponent', () => {
   });
 
   it('should set sensor icon red if status is alert', () => {
+    // arrange
+    const expectedClass = 'sensor-alert';
     // assert
     const itemIcon = fixture.debugElement.query(By.css('[data-test-id="sensor-icon"]')).componentInstance as IconComponent;
-    expect(itemIcon.class()).toContain('c-red');
+    expect(itemIcon.class()).toContain(expectedClass);
   });
 
   it('should display arrow if item has children', () => {
     // arrange
-    const model = new TreeItemModel('1', 'MOTORS H12D - Stage 1', 'component', Status.Alert, null, [new TreeItemModel('1', 'MOTORS H12D - Stage 1', 'component', Status.Alert)]);
+    const model = new TreeItemModel('1', 'MOTORS H12D - Stage 1', TreeItemType.Component, Status.Alert, null, null, [], true);
     fixture.componentRef.setInput('model', model);
     fixture.detectChanges();
 
@@ -81,8 +87,9 @@ describe('TreeItemComponent', () => {
 
   it('should render children if item has children', () => {
     // arrange
-    const child = new TreeItemModel('2', 'MOTORS H12D - Stage 2', 'component', Status.Alert);
-    const model = new TreeItemModel('1', 'MOTORS H12D - Stage 1', 'component', Status.Alert, null, [child]);
+    const child = new TreeItemModel('2', 'MOTORS H12D - Stage 2', TreeItemType.Component, Status.Alert);
+    const model = new TreeItemModel('1', 'MOTORS H12D - Stage 1', TreeItemType.Component, Status.Alert, null, null);
+    component['children'].set([child]);
     fixture.componentRef.setInput('model', model);
     fixture.detectChanges();
 

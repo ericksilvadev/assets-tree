@@ -31,9 +31,11 @@ describe('TreeService', () => {
   it('should get tree items', () => {
     // arrange
     const repository = TestBed.inject(TreeRepository);
+    const appContext = TestBed.inject(AppContextService);
     const spyGetItems = spyOn(repository, 'getItems').and.returnValue(of(items));
 
     // act
+    appContext.setCurrentCompany({ id: '1', name: 'Company' });
 
     // assert
     expect(spyGetItems).toHaveBeenCalled();
