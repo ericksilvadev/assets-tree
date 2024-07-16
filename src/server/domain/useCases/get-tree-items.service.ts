@@ -15,12 +15,12 @@ export class GetTreeItemsService {
   private items: TreeItemModel[] = [];
   private companyId: string = '';
 
-  public async getItems(companyId: string, skip: number = 0, take: number = 30, filter: FilterModel = new FilterModel()): Promise<TreeItemModel[]> {
+  public async getItems(companyId: string, filter: FilterModel = new FilterModel()): Promise<TreeItemModel[]> {
     this.assets = await this.getAssets(companyId);
     this.locations = await this.getLocations(companyId);
     this.setup(companyId);
 
-    return this.items.slice(skip, skip + take);
+    return this.items;
   }
 
   private async getAssets(companyId: string): Promise<AssetEntity[]> {

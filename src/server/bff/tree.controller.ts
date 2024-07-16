@@ -6,10 +6,9 @@ export class TreeController {
 
   public async getTree(req: Request, res: Response) {
     const { id } = req.params;
-    const { skip = 0, take = 30 } = req.query;
 
     try {
-      const treeItems = await this.getTreeItemsService.getItems(id, +skip, +take);
+      const treeItems = await this.getTreeItemsService.getItems(id);
       res.send(treeItems);
     } catch (error: unknown) {
       res.status(500).json({ error });

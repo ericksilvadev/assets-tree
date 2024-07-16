@@ -13,14 +13,10 @@ export class TreeRepository {
 
   constructor(private http: HttpClient) { }
 
-  public getItems(companyId: string, skip: number = 0, take: number = 30): Observable<TreeItemModel[]> {
+  public getItems(companyId: string): Observable<TreeItemModel[]> {
     if (!companyId) return of([]);
 
-    const params = new HttpParams()
-      .set('skip', skip.toString())
-      .set('take', take.toString());
-
-    return this.http.get<TreeItemModel[]>(`${this.baseUrl}/tree/${companyId}`, { params });
+    return this.http.get<TreeItemModel[]>(`${this.baseUrl}/tree/${companyId}`);
   }
 
   public getChildren(parentId: string): Observable<TreeItemModel[]> {
