@@ -6,7 +6,7 @@ export class TreeController {
 
   async getTreeItems(req: Request, res: Response) {
     const { id } = req.params;
-    const { skip = 0, take = 5 } = req.query;
+    const { skip = 0, take = 30 } = req.query;
 
     try {
       const treeItems = await this.getTreeItemsService.getItems(id, +skip, +take);

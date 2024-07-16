@@ -6,7 +6,9 @@ export class TreeItemModel {
     public id: string,
     public name: string,
     public type: TreeItemType,
+    public parentId?: string | null,
     public status?: Status | null,
     public sensor?: Sensors | null,
-    public children: TreeItemModel[] = []) { }
+    public children: TreeItemModel[] = [],
+    public hasChildren: boolean = false) { }
 }

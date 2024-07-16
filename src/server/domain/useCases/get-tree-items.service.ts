@@ -1,4 +1,4 @@
-import { Sensors, Status } from '../../../app/models/filter.model';
+import { FilterModel, Sensors, Status } from '../../../app/models/filter.model';
 import { TreeItemType } from '../../../app/pages/home/components/tree-view/tree-item/models/tree-item.enum';
 import { TreeItemModel } from '../../../app/pages/home/components/tree-view/tree-item/models/tree-item.model';
 import { AssetsAndLocationsRepository } from '../../repositories/assets-and-locations.repository';
@@ -9,12 +9,13 @@ export class GetTreeItemsService {
   constructor(private companyRepository: AssetsAndLocationsRepository) { }
 
   private itemMap = new Map<string, TreeItemModel>();
+  private parentIds = new Set<string>();
   private locations: LocationEntity[] = [];
   private assets: AssetEntity[] = [];
   private items: TreeItemModel[] = [];
   private companyId: string = '';
 
-  public async getItems(companyId: string, skip: number = 0, take: number = 5): Promise<TreeItemModel[]> {
+  public async getItems(companyId: string, skip: number = 0, take: number = 30, filter: FilterModel = new FilterModel()): Promise<TreeItemModel[]> {
     this.assets = await this.getAssets(companyId);
     this.locations = await this.getLocations(companyId);
     this.setup(companyId);
@@ -47,45 +48,21 @@ export class GetTreeItemsService {
 
   private setLocations(): void {
     for (const location of this.locations) {
-      const item = this.getSetItem(location.id, location.name, TreeItemType.Location);
-      if (location.parentId) {
-        const parent = this.getSetItem(location.parentId, '', TreeItemType.Location);
-        parent.children.push(item);
-      }
+      this.getSetItem(location.id, location.name, TreeItemType.Location, location.parentId);
+      this.parentIds.add(location.parentId || '');
     }
   }
 
   private setAssets(): void {
     for (const asset of this.assets) {
-      const item = this.getSetItem(asset.id, asset.name, this.getAssetType(asset), asset.status, asset.sensorType);
-
-      if (asset.parentId) {
-        const parent = this.getSetItem(asset.parentId, '', this.getAssetType(asset));
-
-        parent.children.push(item);
-      } else if (asset.locationId) {
-        const parent = this.getSetItem(asset.locationId, '', TreeItemType.Location);
-
-        parent.children.push(item);
-      }
+      this.getSetItem(asset.id, asset.name, this.getAssetType(asset), asset.parentId || asset.locationId, asset.status, asset.sensorType);
+      this.parentIds.add(asset.parentId || asset.locationId || '');
     }
   }
 
-  private getSetItem(id: string, name: string, type: TreeItemType, status?: Status | null, sensor?: Sensors | null): TreeItemModel {
+  private getSetItem(id: string, name: string, type: TreeItemType, parentId?: string | null, status?: Status | null, sensor?: Sensors | null) {
     if (!this.itemMap.has(id)) {
-      this.itemMap.set(id, new TreeItemModel(id, name, type, status, sensor));
-    } else {
-      this.setItemName(id, name);
-    }
-
-    return this.itemMap.get(id)!;
-  }
-
-  private setItemName(id: string, name: string): void {
-    const item = this.itemMap.get(id);
-
-    if (item && name) {
-      item.name = name;
+      this.itemMap.set(id, new TreeItemModel(id, name, type, parentId, status, sensor));
     }
   }
 
@@ -96,26 +73,13 @@ export class GetTreeItemsService {
   private setRoot(): void {
     this.itemMap.forEach(item => {
       if (this.isRootItem(item)) {
+        item.hasChildren = this.parentIds.has(item.id);
         this.items.push(item);
       }
     });
   }
 
   private isRootItem(item: TreeItemModel): boolean {
-    if (this.isLocation(item)) {
-      const location = this.locations.find(location => location.id === item.id);
-      const isRootLocation = Boolean(location && !location.parentId);
-
-      return isRootLocation;
-    }
-
-    const asset = this.assets.find(asset => asset.id === item.id);
-    const isRootAsset = Boolean(asset && asset.parentId && asset.locationId);
-
-    return isRootAsset;
-  }
-
-  private isLocation(item: TreeItemModel): boolean {
-    return item.type === TreeItemType.Location;
+    return !this.itemMap.get(item.id)?.parentId;
   }
 }

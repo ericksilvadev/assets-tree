@@ -13,7 +13,7 @@ export class TreeRepository {
 
   constructor(private http: HttpClient) { }
 
-  public getItems(companyId: string, skip: number = 0, take: number = 5): Observable<TreeItemModel[]> {
+  public getItems(companyId: string, skip: number = 0, take: number = 30): Observable<TreeItemModel[]> {
     if (!companyId) return of([]);
 
     const params = new HttpParams()
