@@ -1,13 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, WritableSignal, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, WritableSignal, input, signal } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { svgIcons } from './icon.svg';
 
 @Component({
   selector: 'app-icon',
   standalone: true,
-  template: '<div [innerHTML]="icon()" class="icon {{ class() }}"></div>',
+  templateUrl: './icon.component.html',
   styleUrl: './icon.component.scss',
-  encapsulation: ViewEncapsulation.ShadowDom,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IconComponent implements OnInit {

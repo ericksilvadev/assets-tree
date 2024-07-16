@@ -3,7 +3,7 @@
   height: 1.6rem;
   display: flex;
 
-  .icon-svg {
+  ::ng-deep .icon-svg {
     fill: currentColor;
   }
 }
