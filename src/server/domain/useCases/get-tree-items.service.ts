@@ -83,7 +83,7 @@ export class GetTreeItemsService {
     return !this.itemMap.get(item.id)?.parentId;
   }
 
-  public getChildren(parentId: string, skip: number = 0, take: number = 30): TreeItemModel[] {
+  public getChildren(parentId: string): TreeItemModel[] {
     const children: TreeItemModel[] = [];
 
     for (let item of this.itemMap.values()) {
@@ -93,6 +93,6 @@ export class GetTreeItemsService {
       }
     }
 
-    return children.slice(skip, skip + take);
+    return children;
   }
 }

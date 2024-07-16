@@ -18,10 +18,9 @@ export class TreeController {
 
   public getChildren(req: Request, res: Response) {
     const { parentId } = req.params;
-    const { skip = 0, take = 30 } = req.query;
 
     try {
-      const treeItems = this.getTreeItemsService.getChildren(parentId, +skip, +take);
+      const treeItems = this.getTreeItemsService.getChildren(parentId);
       res.send(treeItems);
     } catch (error: unknown) {
       res.status(500).json({ error });
