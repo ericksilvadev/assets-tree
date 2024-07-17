@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { By } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
+import { routes } from '../../../../../app.routes';
 import { IconComponent } from '../../../../../components/icon/icon.component';
 import { Sensors } from '../../../../../models/sensors.enum';
 import { Status } from '../../../../../models/status.enum';
@@ -15,7 +17,8 @@ describe('TreeItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TreeItemComponent, HttpClientTestingModule]
+      imports: [TreeItemComponent, HttpClientTestingModule],
+      providers: [provideRouter(routes)]
     })
       .compileComponents();
 
