@@ -7,7 +7,7 @@ import { AssetsAndLocationsRepository } from '../../repositories/assets-and-loca
 import { AssetEntity } from '../entities/asset';
 import { LocationEntity } from '../entities/location';
 
-export class GetTreeItemsService {
+export class TreeService {
   constructor(private companyRepository: AssetsAndLocationsRepository) { }
 
   private itemMap = new Map<string, TreeItemModel>();
@@ -112,5 +112,9 @@ export class GetTreeItemsService {
     }
 
     return children;
+  }
+
+  public getComponent(id: string): AssetEntity | undefined {
+    return this.assets.find(asset => asset.id === id);
   }
 }

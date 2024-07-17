@@ -5,7 +5,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import bootstrap from '../main.server';
 import { TreeController } from './bff/tree.controller';
-import { GetTreeItemsService } from './domain/useCases/get-tree-items.service';
+import { TreeService } from './domain/tree/tree.service';
 import { AssetsAndLocationsRepository } from './repositories/assets-and-locations.repository';
 
 export function app(): express.Express {
@@ -20,11 +20,12 @@ export function app(): express.Express {
   server.set('views', browserDistFolder);
 
   const assetsAndLocationsRepository = new AssetsAndLocationsRepository();
-  const getTreeItemsService = new GetTreeItemsService(assetsAndLocationsRepository);
+  const getTreeItemsService = new TreeService(assetsAndLocationsRepository);
   const treeController = new TreeController(getTreeItemsService);
 
   server.get('/api/tree/:id', (req, res) => treeController.getTree(req, res));
   server.get('/api/children/:parentId', (req, res) => treeController.getChildren(req, res));
+  server.get('/api/tree/component/:id', (req, res) => treeController.getComponent(req, res));
 
   server.get('*.*', express.static(browserDistFolder, {
     maxAge: '1y'
