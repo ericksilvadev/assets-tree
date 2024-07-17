@@ -1,16 +1,17 @@
 import { Component, OnDestroy } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Company } from '../../models/company.model';
 import { AppContextService } from '../../services/app-context.service';
 import { BreadcrumbsComponent } from "./components/breadcrumbs/breadcrumbs.component";
 import { FilterComponent } from "./components/filter/filter.component";
-import { TreeViewComponent } from "./components/tree-view/tree-view.component";
 import { SearchFilterComponent } from "./components/search-filter/search-filter.component";
+import { TreeViewComponent } from "./components/tree-view/tree-view.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [BreadcrumbsComponent, FilterComponent, TreeViewComponent, SearchFilterComponent],
+  imports: [BreadcrumbsComponent, FilterComponent, TreeViewComponent, SearchFilterComponent, RouterOutlet],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
