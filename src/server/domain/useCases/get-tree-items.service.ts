@@ -1,4 +1,6 @@
-import { FilterModel, Sensors, Status } from '../../../app/models/filter.model';
+import { FilterModel } from '../../../app/models/filter.model';
+import { Sensors, SensorsMap } from '../../../app/models/sensors.enum';
+import { Status, StatusMap } from '../../../app/models/status.enum';
 import { TreeItemType } from '../../../app/pages/home/components/tree-view/tree-item/models/tree-item.enum';
 import { TreeItemModel } from '../../../app/pages/home/components/tree-view/tree-item/models/tree-item.model';
 import { AssetsAndLocationsRepository } from '../../repositories/assets-and-locations.repository';
@@ -55,7 +57,7 @@ export class GetTreeItemsService {
 
   private setAssets(): void {
     for (const asset of this.assets) {
-      this.getSetItem(asset.id, asset.name, this.getAssetType(asset), asset.parentId || asset.locationId, asset.status, asset.sensorType);
+      this.getSetItem(asset.id, asset.name, this.getAssetType(asset), asset.parentId || asset.locationId, this.getAssetStatus(asset), this.getAssetSensor(asset));
       this.parentIds.add(asset.parentId || asset.locationId || '');
     }
   }
@@ -68,6 +70,22 @@ export class GetTreeItemsService {
 
   private getAssetType(asset: AssetEntity): TreeItemType {
     return asset.sensorType ? TreeItemType.Component : TreeItemType.Asset;
+  }
+
+  private getAssetStatus(asset: AssetEntity): Status | null {
+    if (!asset.status) {
+      return null;
+    }
+
+    return StatusMap[asset.status] as Status;
+  }
+
+  private getAssetSensor(asset: AssetEntity): Sensors | null {
+    if (!asset.sensorType) {
+      return null;
+    }
+
+    return SensorsMap[asset.sensorType] as Sensors;
   }
 
   private setRoot(): void {
