@@ -5,6 +5,8 @@ import { Status } from '../../../../../models/status.enum';
 import { TreeService } from '../../../../../services/tree.service';
 import { TreeItemType } from './models/tree-item.enum';
 import { TreeItemModel } from './models/tree-item.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ComponentService } from '../../../../../services/component.service';
 
 @Component({
   selector: 'app-tree-item',
@@ -25,7 +27,20 @@ export class TreeItemComponent {
 
   protected children: WritableSignal<TreeItemModel[]> = signal<TreeItemModel[]>([]);
 
-  constructor(private treeService: TreeService) { }
+  constructor(private treeService: TreeService, private router: Router, private activatedRoute: ActivatedRoute, private componentService: ComponentService) { }
+
+  private getSensorIconColorClasss(): string {
+    return this.model().status === Status.Alert ? 'sensor-alert' : 'sensor-normal';
+  }
+
+  private getSensorIconName(): string {
+    return this.model().sensor == Sensors.Energy ? 'bolt' : 'circle';
+  }
+
+  protected onSummaryClick() {
+    this.getChildren();
+    this.selectComponent();
+  }
 
   protected getChildren() {
     if (!this.model().hasChildren || this.children().length) return;
@@ -34,11 +49,18 @@ export class TreeItemComponent {
       .subscribe(children => this.children.set(children));
   }
 
-  private getSensorIconColorClasss(): string {
-    return this.model().status === Status.Alert ? 'sensor-alert' : 'sensor-normal';
+  private selectComponent() {
+    this.componentService.setSelectedComponent(this.model());
+    this.navigateToComponent();
   }
 
-  private getSensorIconName(): string {
-    return this.model().sensor == Sensors.Energy ? 'bolt' : 'circle';
+  private navigateToComponent() {
+    if (this.isComponent()) {
+      this.router.navigate(['component', this.model().id], { relativeTo: this.activatedRoute });
+    }
+  }
+
+  private isComponent(): boolean {
+    return this.model().type === TreeItemType.Component;
   }
 }

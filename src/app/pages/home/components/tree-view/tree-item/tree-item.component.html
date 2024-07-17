@@ -1,5 +1,5 @@
 <details #details>
-  <summary class="tree-item" (click)="getChildren()">
+  <summary class="tree-item" (click)="onSummaryClick()">
     @for (_ of [].constructor(indent()); track indent()) {
     <div class="tree-item-indent"></div>
     }
