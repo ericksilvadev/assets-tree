@@ -1,7 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 import { Company } from '../../models/company.model';
 import { AppContextService } from '../app-context.service';
 

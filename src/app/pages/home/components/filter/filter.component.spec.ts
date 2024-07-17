@@ -2,7 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FilterComponent } from './filter.component';
 import { FilterService } from '../../../../services/filter.service';
-import { FilterModel, Sensors, Status } from '../../../../models/filter.model';
+import { FilterModel } from '../../../../models/filter.model';
+import { Sensors } from '../../../../models/sensors.enum';
+import { Status } from '../../../../models/status.enum';
 
 describe('FilterComponent', () => {
   let component: FilterComponent;
