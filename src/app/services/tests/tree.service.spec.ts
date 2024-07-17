@@ -2,11 +2,13 @@ import { TestBed } from '@angular/core/testing';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
+import { FilterModel } from '../../models/filter.model';
+import { TreeItemType } from '../../pages/home/components/tree-view/tree-item/models/tree-item.enum';
 import { TreeItemModel } from '../../pages/home/components/tree-view/tree-item/models/tree-item.model';
 import { TreeRepository } from '../../repositories/tree.repository';
 import { AppContextService } from '../app-context.service';
+import { FilterService } from '../filter.service';
 import { TreeService } from '../tree.service';
-import { TreeItemType } from '../../pages/home/components/tree-view/tree-item/models/tree-item.enum';
 
 describe('TreeService', () => {
   let service: TreeService;
@@ -50,5 +52,20 @@ describe('TreeService', () => {
 
     // assert
     expect(spyGetItems).toHaveBeenCalled();
+  });
+
+  it('should set item when filter changes', () => {
+    // arrange
+    const repository = TestBed.inject(TreeRepository);
+    const spyGetItems = spyOn(repository, 'getItems').and.returnValue(of(items));
+    const appContext = TestBed.inject(AppContextService);
+    appContext.currentCompany.next({ id: '1', name: 'Company' });
+    const filterService = TestBed.inject(FilterService);
+
+    // act
+    filterService.filter.next(new FilterModel('search'));
+
+    // assert
+    expect(spyGetItems).toHaveBeenCalledTimes(2);
   });
 });

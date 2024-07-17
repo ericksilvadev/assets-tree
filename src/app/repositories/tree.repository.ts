@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../environment/environment';
 import { TreeItemModel } from '../pages/home/components/tree-view/tree-item/models/tree-item.model';
+import { FilterModel } from '../models/filter.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,14 @@ export class TreeRepository {
 
   constructor(private http: HttpClient) { }
 
-  public getItems(companyId: string): Observable<TreeItemModel[]> {
+  public getItems(companyId: string, filter: FilterModel = new FilterModel()): Observable<TreeItemModel[]> {
     if (!companyId) return of([]);
+    const params = new HttpParams()
+      .set('search', filter.search)
+      .set('sensors', filter.sensors)
+      .set('status', filter.status);
 
-    return this.http.get<TreeItemModel[]>(`${this.baseUrl}/tree/${companyId}`);
+    return this.http.get<TreeItemModel[]>(`${this.baseUrl}/tree/${companyId}`, { params });
   }
 
   public getChildren(parentId: string): Observable<TreeItemModel[]> {
