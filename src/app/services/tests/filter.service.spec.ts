@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
+import { FilterModel } from '../../models/filter.model';
 import { FilterService } from '../filter.service';
-import { FilterModel, Sensors, Status } from '../../models/filter.model';
 
 describe('FilterService', () => {
   let service: FilterService;

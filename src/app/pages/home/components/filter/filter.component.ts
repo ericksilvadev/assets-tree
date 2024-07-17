@@ -1,9 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnDestroy, signal, WritableSignal } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { IconComponent } from "../../../../components/icon/icon.component";
-import { FilterModel, Sensors, Status } from '../../../../models/filter.model';
+import { FilterModel } from '../../../../models/filter.model';
+import { Sensors } from '../../../../models/sensors.enum';
+import { Status } from '../../../../models/status.enum';
 import { FilterService } from '../../../../services/filter.service';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-filter',

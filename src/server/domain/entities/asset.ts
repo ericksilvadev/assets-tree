@@ -1,4 +1,5 @@
-import { Sensors, Status } from "../../../app/models/filter.model";
+import { Sensors } from "../../../app/models/sensors.enum";
+import { Status } from "../../../app/models/status.enum";
 
 export class AssetEntity {
   constructor(

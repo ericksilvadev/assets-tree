@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input, signal, WritableSignal } from '@angular/core';
 import { IconComponent } from "../../../../../components/icon/icon.component";
-import { Sensors, Status } from '../../../../../models/filter.model';
+import { Sensors } from '../../../../../models/sensors.enum';
+import { Status } from '../../../../../models/status.enum';
 import { TreeService } from '../../../../../services/tree.service';
 import { TreeItemType } from './models/tree-item.enum';
 import { TreeItemModel } from './models/tree-item.model';

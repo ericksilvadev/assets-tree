@@ -1,12 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TreeItemComponent } from './tree-item.component';
-import { TreeItemModel } from './models/tree-item.model';
-import { Sensors, Status } from '../../../../../models/filter.model';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { By } from '@angular/platform-browser';
 import { IconComponent } from '../../../../../components/icon/icon.component';
+import { Sensors } from '../../../../../models/sensors.enum';
+import { Status } from '../../../../../models/status.enum';
 import { TreeItemType } from './models/tree-item.enum';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TreeItemModel } from './models/tree-item.model';
+import { TreeItemComponent } from './tree-item.component';
 
 describe('TreeItemComponent', () => {
   let component: TreeItemComponent;
