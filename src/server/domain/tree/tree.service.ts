@@ -7,7 +7,7 @@ import { TreeItemModel } from '../../../app/pages/home/components/tree-view/tree
 import { AssetsAndLocationsRepository } from '../../repositories/assets-and-locations.repository';
 import { AssetEntity } from '../entities/asset';
 import { LocationEntity } from '../entities/location';
-import { FilterItemsService } from '../useCases/filter-items.service';
+import { FilterItemsService } from './filter-items.service';
 
 export class TreeService {
 
