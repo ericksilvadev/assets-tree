@@ -1,0 +1,19 @@
+@import '../../../../../styles/colors/semantic-color-tokens.scss';
+
+.component-details-container {
+  .component-details-header {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 1.4rem 1.6rem;
+    border-bottom: 1px solid $semantics-gray-medium-faded;
+
+    app-icon.sensor-icon {
+      color: $semantics-green-medium;
+
+      &.alert {
+        color: $semantics-red-medium;
+      }
+    }
+  }
+}

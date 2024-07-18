@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, WritableSignal, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { svgIcons } from './icon.svg';
 
@@ -9,24 +9,14 @@ import { svgIcons } from './icon.svg';
   styleUrl: './icon.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IconComponent implements OnInit {
+export class IconComponent {
 
   name = input<string>('');
   class = input<string>('');
 
-  protected icon: WritableSignal<SafeHtml> = signal('');
+  protected icon = computed(() => this.getIcon(this.name()));
 
   constructor(private sanitizer: DomSanitizer) { }
-
-  ngOnInit(): void {
-    this.setIcon();
-  }
-
-  private setIcon(): void {
-    const icon = this.getIcon(this.name());
-
-    this.icon.set(icon);
-  }
 
   private getIcon(name: string): SafeHtml {
     const icon = svgIcons[name];

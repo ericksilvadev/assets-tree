@@ -26,7 +26,9 @@ export class ComponentDetailsComponent implements OnDestroy {
 
   constructor(private componentService: ComponentService) {
     this._componentSubscription = componentService.selectedComponent.subscribe((component) => {
-      this.setComponent(component);
+      if (component.id) {
+        this.setComponent(component);
+      }
     });
   }
 
