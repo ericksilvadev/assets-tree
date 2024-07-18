@@ -27,7 +27,7 @@ export class IconComponent {
       return '';
     }
 
-    const iconsString = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-svg" viewBox="${icon.viewBox}">${icon.content}</svg>`;
+    const iconsString = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-svg" ${icon.attributes || ''} viewBox="${icon.viewBox}">${icon.content}</svg>`;
 
     return this.sanitizer.bypassSecurityTrustHtml(iconsString);
   }
