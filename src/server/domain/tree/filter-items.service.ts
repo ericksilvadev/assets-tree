@@ -1,5 +1,5 @@
 import { FilterModel } from "../../../app/models/filter.model";
-import { TreeItemModel } from "../../../app/pages/home/components/tree-view/tree-item/models/tree-item.model";
+import { TreeItemModel } from "../../../app/models/tree-item.model";
 
 export class FilterItemsService {
   constructor(private filterModel: FilterModel) { }

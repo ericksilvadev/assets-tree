@@ -2,8 +2,8 @@ import { ComponentModel } from '../../../app/models/component.model';
 import { FilterModel } from '../../../app/models/filter.model';
 import { Sensors, SensorsMap } from '../../../app/models/sensors.enum';
 import { Status, StatusMap } from '../../../app/models/status.enum';
-import { TreeItemType } from '../../../app/pages/home/components/tree-view/tree-item/models/tree-item.enum';
-import { TreeItemModel } from '../../../app/pages/home/components/tree-view/tree-item/models/tree-item.model';
+import { TreeItemType } from '../../../app/models/tree-item.enum';
+import { TreeItemModel } from '../../../app/models/tree-item.model';
 import { AssetsAndLocationsRepository } from '../../repositories/assets-and-locations.repository';
 import { AssetEntity } from '../entities/asset';
 import { LocationEntity } from '../entities/location';
@@ -134,7 +134,7 @@ export class TreeService {
     if (this.filteredItemMap.has(item.id)) return true;
 
     if (this.itemHasChildren(item)) {
-      for (let child of this.getChildren(item.id)) {
+      for (let child of this.getAllChildren(item.id)) {
         if (this.isFilteredItemOrParent(child)) {
           hasFilteredChild = true;
           break;
@@ -146,6 +146,14 @@ export class TreeService {
   }
 
   public getChildren(parentId: string): TreeItemModel[] {
+    if (this.filteredItemMap.size === this.itemMap.size) {
+      return this.getAllChildren(parentId);
+    } else {
+      return this.getFilteredChildren(parentId);
+    }
+  }
+
+  private getAllChildren(parentId: string): TreeItemModel[] {
     const children: TreeItemModel[] = [];
 
     for (let item of this.itemMap.values()) {
@@ -156,6 +164,39 @@ export class TreeService {
     }
 
     return children;
+  }
+
+  private getFilteredChildren(parentId: string): TreeItemModel[] {
+    const children: TreeItemModel[] = [];
+
+    for (let item of this.itemMap.values()) {
+      if (item.parentId === parentId) {
+        const isFiltered = this.filteredItemMap.has(item.id);
+        const hasFilteredDescendants = this.hasFilteredDescendants(item.id);
+
+        if (isFiltered || hasFilteredDescendants) {
+          item.hasChildren = this.itemHasChildren(item);
+          children.push(item);
+
+          if (item.hasChildren) {
+            item.children = this.getFilteredChildren(item.id);
+          }
+        }
+      }
+    }
+
+    return children;
+  }
+
+  private hasFilteredDescendants(itemId: string): boolean {
+    for (let item of this.itemMap.values()) {
+      if (item.parentId === itemId) {
+        if (item.parentId === itemId && this.filteredItemMap.has(item.id) || this.hasFilteredDescendants(item.id)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   private itemHasChildren(item: TreeItemModel): boolean {
