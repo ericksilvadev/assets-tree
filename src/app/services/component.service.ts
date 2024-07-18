@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { TreeItemType } from '../pages/home/components/tree-view/tree-item/models/tree-item.enum';
-import { TreeItemModel } from '../pages/home/components/tree-view/tree-item/models/tree-item.model';
+import { TreeItemType } from '../models/tree-item.enum';
+import { TreeItemModel } from '../models/tree-item.model';
 import { AssetEntity } from '../../server/domain/entities/asset';
 import { TreeRepository } from '../repositories/tree.repository';
 import { ComponentModel } from '../models/component.model';

@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy, signal, WritableSignal } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { FilterModel } from '../models/filter.model';
-import { TreeItemModel } from '../pages/home/components/tree-view/tree-item/models/tree-item.model';
+import { TreeItemModel } from '../models/tree-item.model';
 import { TreeRepository } from '../repositories/tree.repository';
 import { AppContextService } from './app-context.service';
 import { FilterService } from './filter.service';

@@ -12,18 +12,19 @@ export class CompanyService {
 
   public companies: WritableSignal<Company[]> = signal([]);
 
-  private companyParamId?: string;
+  private companyParamId: string = '';
 
   constructor(private companyRepository: CompanyRepository, private appContext: AppContextService, private router: Router) {
-    this.setCompanyIdByRoute();
-    this.setCompanies();
+    this.setupByRoute();
   }
 
-  private setCompanyIdByRoute() {
+  private setupByRoute() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        const companyId = event.url.split('/').pop();
-        this.setCompanyParamId(companyId ?? '');
+        const companyId = event.url.split('/company/').pop();
+
+        this.companyParamId = companyId?.split('/')[0] ?? '';
+        this.setCompanies();
       }
     });
   }
@@ -50,10 +51,6 @@ export class CompanyService {
     if (company?.id != this.appContext.currentCompany.value.id) {
       this.appContext.setCurrentCompany(company ?? this.companies()[0]);
     }
-  }
-
-  public setCompanyParamId(companyId: string) {
-    this.companyParamId = companyId;
   }
 
 }

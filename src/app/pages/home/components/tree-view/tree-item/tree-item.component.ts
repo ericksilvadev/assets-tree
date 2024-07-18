@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, OnDestroy, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, ElementRef, input, OnDestroy, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IconComponent } from "../../../../../components/icon/icon.component";
@@ -6,8 +6,9 @@ import { Sensors } from '../../../../../models/sensors.enum';
 import { Status } from '../../../../../models/status.enum';
 import { ComponentService } from '../../../../../services/component.service';
 import { TreeService } from '../../../../../services/tree.service';
-import { TreeItemType } from './models/tree-item.enum';
-import { TreeItemModel } from './models/tree-item.model';
+import { TreeItemType } from '../../../../../models/tree-item.enum';
+import { TreeItemModel } from '../../../../../models/tree-item.model';
+import { FilterService } from '../../../../../services/filter.service';
 
 @Component({
   selector: 'app-tree-item',
@@ -17,10 +18,11 @@ import { TreeItemModel } from './models/tree-item.model';
   styleUrl: './tree-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TreeItemComponent implements OnDestroy {
+export class TreeItemComponent implements OnDestroy, OnInit {
   public model = input<TreeItemModel>(new TreeItemModel('', '', TreeItemType.Location, null, null));
 
   private _selectedComponentSubscription: Subscription;
+  private _filterChangeSubscription: Subscription;
   private _getChildrenSubscription?: Subscription;
 
   protected indent = input<number>(0);
@@ -29,10 +31,32 @@ export class TreeItemComponent implements OnDestroy {
   protected children: WritableSignal<TreeItemModel[]> = signal<TreeItemModel[]>([]);
   protected isSelected = signal(false);
 
-  constructor(private treeService: TreeService, private router: Router, private activatedRoute: ActivatedRoute, private componentService: ComponentService) {
+  @ViewChild('details', { static: true }) details?: ElementRef<HTMLDetailsElement>;
+
+  constructor(
+    private treeService: TreeService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private componentService: ComponentService,
+    filterService: FilterService) {
     this._selectedComponentSubscription = componentService.selectedComponent.subscribe(selectedComponent => {
       this.isSelected.set(Boolean(selectedComponent.id) && selectedComponent.id === this.model().id);
     });
+
+    this._filterChangeSubscription = filterService.filter.subscribe(() => {
+      this.children.set([]);
+      this.details?.nativeElement?.removeAttribute('open');
+    });
+  }
+
+  ngOnInit(): void {
+    this.setSelected();
+  }
+
+  private setSelected() {
+    const selectedComponent = this.componentService.selectedComponent.value;
+
+    this.isSelected.set(Boolean(selectedComponent.id) && selectedComponent.id === this.model().id);
   }
 
   private getSensorIconColorClasss(): string {
@@ -73,5 +97,6 @@ export class TreeItemComponent implements OnDestroy {
   ngOnDestroy(): void {
     this._selectedComponentSubscription.unsubscribe();
     this._getChildrenSubscription?.unsubscribe();
+    this._filterChangeSubscription.unsubscribe();
   }
 }

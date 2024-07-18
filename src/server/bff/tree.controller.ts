@@ -1,7 +1,7 @@
+import { HttpStatusCode } from '@angular/common/http';
 import { Request, Response } from 'express';
-import { TreeService } from '../domain/tree/tree.service';
-import { HttpStatusCode } from 'axios';
 import { FilterModel } from '../../app/models/filter.model';
+import { TreeService } from '../domain/tree/tree.service';
 
 export class TreeController {
   constructor(private treeService: TreeService) { }

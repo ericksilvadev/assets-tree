@@ -1,27 +1,82 @@
-# AssetsTree
+# Tractian Challenge
+This is my solution for the Tractian Frontend challenge. Here's a summary of what I did, the tools and strategies I used, and what I could have done better.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.7.
+## Summary
+- [Tools](#tools)
+- [Strategies](#strategies)
+  - [Angular OnPush Change Detection Strategy](#angular-onpush-change-detection-strategy)
+  - [SSR and BFF](#ssr-and-bff)
+  - [TDD](#tdd)
+- [Improvements That I Wish I Had Made](#improvements-that-i-wish-i-had-made)
+  - [Pagination With Infinite Scrolling](#pagination-with-infinite-scrolling)
+  - [Unit Tests For BFF Layer](#unit-tests-for-bff-layer)
+  - [Filter Optimization](#filter-optimization)
+  - [Animations and Transitions](#animations-and-transitions)
+  - [Loading Feedback](#loading-feedback)
+- [The App](#the-app)
 
-## Development server
+## Tools
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+To deploy the challenge faster, I chose to use Angular since it's a framework I've been working with for more than 2 years and am more proficient with. Angular has a lot of useful tools out of the box, so I didn't need to install any other libraries to accomplish the challenge.
 
-## Code scaffolding
+## Strategies
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+To enhance performance and write a better code, I used some strategies that I found fit the solution. Let's talk about them.
 
-## Build
+### Angular OnPush Change Detection Strategy
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+An Angular feature that allows us to have more control over change detection and view updates, making them only when necessary. With it, we increase performance when having a high number of components on screen.
 
-## Running unit tests
+### SSR and BFF
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Server-Side Rendering by itself provides a better user experience by lowering the time for the page to render and caching data from requests. But I used it to go a little bit further. I used the power of SSR to write a layer of [Backend for Frontend](https://medium.com/mobilepeople/backend-for-frontend-pattern-why-you-need-to-know-it-46f94ce420b0) with NodeJS. This way, I was able to modify and treat the data exactly the way my client needed, without stressing the client. All data transformation occurs on the server side, allowing the app to handle large requests without affecting the client.
 
-## Running end-to-end tests
+### TDD
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Test-Driven Development is a really good way to keep your code simple, solving only the problems that need to be solved. It also has the beneficial side effect of making your code highly test-covered, allowing you to refactor and implement new features without having thousands of unexpected bugs.
 
-## Further help
+## Improvements That I Wish I Had Made
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+There are some things that I would improve if I had more time dedicated to this project.
+
+### Pagination With Infinite Scrolling
+
+Talking about performance again, infinite scrolling would be a nice feature to have, lowering the initial loading time and making the app proof against excessively large requests.
+
+### Unit Tests For BFF Layer
+
+Even using TDD during development, I had some trouble making tests work for my BFF. So, I had to write them in the traditional way, which led to worse code design and a lot of time trying to resolve bugs. I should have dedicated more time to making the tests work; it would have saved me some good time.
+
+### Filter Optimization
+Optimize the search for filtered children.
+
+### Animations and Transitions
+
+Another thing I'd like to have done to improve the user experience is animations, especially in the tree view component. This would make the user experience more pleasant.
+
+### Loading Feedback
+
+Implementing simple loading spinners would make the experience much better.
+
+## The App
+Here is a demo video of the app running. The only performance issue is when getting filtered child items. The cursor in the recording may appear to lag, but this is caused by the recording itself. Even when the server struggles to process data, like in the case I mentioned before, the client is not affected and the app continues to run perfectly. At the end of the video, I do a couple of reloads in the Apex Unit. Despite having the largest amount of data, the rendering is almost instant.
+![Video](src/assets/AssetsTree%20-%20Recording.mp4)
+![Screenshot](src/assets/Asset%20Tree%20-%20Screenshot.png)
+
+### Requirements
+You'll need to have NodeJS and NPM installed in order to run it locally, after it done, you can clone this repository and follow the steps bellow.
+
+### Running the project
+
+Once you have the project in your machine, go to the project root file and run:
+
+```
+npm run build
+```
+When the project build is finished, start the server by running
+
+```
+npm run serve:ssr
+```
+
+Server will listen by default on `http://localhost:4000`

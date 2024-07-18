@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ComponentDetailsComponent } from './component-details.component';
-import { TreeItemType } from '../tree-view/tree-item/models/tree-item.enum';
-import { TreeItemModel } from '../tree-view/tree-item/models/tree-item.model';
+import { TreeItemType } from '../../../../models/tree-item.enum';
+import { TreeItemModel } from '../../../../models/tree-item.model';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentModel } from '../../../../models/component.model';
 import { Sensors, SensorsMap } from '../../../../models/sensors.enum';
