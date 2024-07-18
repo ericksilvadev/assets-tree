@@ -8,6 +8,6 @@ import { Component, computed, input } from '@angular/core';
   styleUrl: './avatar.component.scss'
 })
 export class AvatarComponent {
-  protected avatarName = input('');
+  public avatarName = input('');
   protected avatarInitial = computed(() => this.avatarName().charAt(0));
 }

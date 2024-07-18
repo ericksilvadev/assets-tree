@@ -1,2 +1,37 @@
-<h1 class="component-title">{{ component().name }}</h1>
-<app-icon [name]="sensorIcon()" [attr.class]="statusColorClass() + ' sensor-icon'"></app-icon>
+<section class="component-details-container">
+  <header class="component-details-header">
+    <h1 class="component-title">{{ component().name }}</h1>
+    <app-icon [name]="sensorIcon()" [attr.class]="statusColorClass() + ' sensor-icon'"></app-icon>
+  </header>
+
+  <section class="component-details">
+    <div class="component-image-wrapper">
+      <input type="file" id="add-image" class="add-image-input">
+      <app-icon name="file-box"></app-icon>
+      <label for="add-image">Adicionar imagem do Ativo</label>
+    </div>
+
+    <div class="component-type-details">
+      <h2>Tipo do Equipamento</h2>
+      <p>Motor Elétrico (Trifásico)</p>
+    </div>
+
+    <div class="component-responsible-details">
+      <h2>Responsáveis</h2>
+      <app-avatar avatarName="Mecânica"></app-avatar>
+      <span>Mecânica</span>
+    </div>
+
+    <div class="component-sensor-details">
+      <h2>Sensor</h2>
+      <app-icon [name]="sensorIcon()"></app-icon>
+      <span>{{ component().sensorId }}</span>
+    </div>
+
+    <div class="component-gateway-details">
+      <h2>Receptor</h2>
+      <app-icon name="gateway"></app-icon>
+      <span>{{ component().gatewayId }}</span>
+    </div>
+  </section>
+</section>

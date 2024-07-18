@@ -7,11 +7,12 @@ import { ComponentModel } from '../../../../models/component.model';
 import { Sensors, SensorsMap } from '../../../../models/sensors.enum';
 import { Status, StatusMap } from '../../../../models/status.enum';
 import { IconComponent } from "../../../../components/icon/icon.component";
+import { AvatarComponent } from "../../../../components/avatar/avatar.component";
 
 @Component({
   selector: 'app-component-details',
   standalone: true,
-  imports: [IconComponent],
+  imports: [IconComponent, AvatarComponent],
   templateUrl: './component-details.component.html',
   styleUrl: './component-details.component.scss'
 })

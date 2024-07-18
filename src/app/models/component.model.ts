@@ -10,8 +10,8 @@ export class ComponentModel {
     public status: Status = Status.Operating,
     public sensorType: Sensors = Sensors.Energy,
     public sensorId: string = '',
-    public parentId: string | null,
-    public locationId: string | null,
+    public parentId: string | null = null,
+    public locationId: string | null = null,
   ) { }
 
   public static fromEntity(entity: AssetEntity): ComponentModel {
