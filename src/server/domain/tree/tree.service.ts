@@ -11,11 +11,12 @@ import { FilterItemsService } from '../useCases/filter-items.service';
 
 export class TreeService {
 
-  private itemMap = new Map<string, TreeItemModel>();
-  private parents = new Set<string>();
   private locations: LocationEntity[] = [];
   private assets: AssetEntity[] = [];
   private items: TreeItemModel[] = [];
+  private parents = new Set<string>();
+  private itemMap = new Map<string, TreeItemModel>();
+  private assetsMap = new Map<string, AssetEntity>();
   private filteredItems = new Map<string, TreeItemModel>();
   private filterService: FilterItemsService = new FilterItemsService(new FilterModel());
   private companyId: string = '';
@@ -65,6 +66,7 @@ export class TreeService {
 
   private setAssets(): void {
     for (const asset of this.assets) {
+      this.assetsMap.set(asset.id, asset);
       this.getSetItem(asset.id, asset.name, this.getAssetType(asset), asset.parentId || asset.locationId, this.getAssetStatus(asset), this.getAssetSensor(asset));
       this.parents.add(asset.parentId || asset.locationId || '');
     }
@@ -144,6 +146,7 @@ export class TreeService {
   public getChildren(parentId: string): TreeItemModel[] {
     const children: TreeItemModel[] = [];
 
+    console.log(this.itemMap.size);
     for (let item of this.itemMap.values()) {
       if (item.parentId === parentId) {
         item.hasChildren = this.parents.has(item.id);
@@ -164,6 +167,6 @@ export class TreeService {
   }
 
   private getAsset(id: string): AssetEntity | undefined {
-    return this.assets.find(asset => asset.id === id);
+    return this.assetsMap.get(id);
   }
 }
