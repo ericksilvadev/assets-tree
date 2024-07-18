@@ -62,6 +62,8 @@ Implementing simple loading spinners would make the experience much better.
 [Click here to watch a demo video of the app running](https://drive.google.com/drive/folders/1WtGuXavPd-MGyJxjZqTXZPNgmT7uHuSO?usp=sharing) (had to upload on Google Drive). The only performance issue is when getting filtered child items. The cursor in the recording may appear to lag, but this is caused by the recording itself. Even when the server struggles to process data, like in the case I mentioned before, the client is not affected and the app continues to run perfectly. At the end of the video, I do a couple of reloads in the Apex Unit. Despite having the largest amount of data, the rendering is almost instant.
 ![Screenshot](src/assets/Asset%20Tree%20-%20Screenshot.png)
 
+If you prefer, follow the steps bellow to run the app locally.
+
 ### Requirements
 You'll need to have NodeJS and NPM installed in order to run it locally, after it done, you can clone this repository and follow the steps bellow.
 
