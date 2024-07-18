@@ -14,6 +14,7 @@ main {
   padding: 1.6rem;
   flex: 1;
   display: grid;
+  overflow: auto;
   gap: 1.2rem 0.9rem;
   grid-template-columns: 3.75fr 6.25fr;
   grid-template-rows: auto 1fr;

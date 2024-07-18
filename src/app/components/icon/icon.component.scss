@@ -3,7 +3,7 @@
   height: 1.6rem;
   display: flex;
 
-  ::ng-deep .icon-svg {
+  ::ng-deep .icon-svg:not([fill="transparent"]) {
     fill: currentColor;
   }
 }

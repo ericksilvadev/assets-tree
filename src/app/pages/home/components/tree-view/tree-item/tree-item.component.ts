@@ -1,12 +1,13 @@
-import { ChangeDetectionStrategy, Component, computed, input, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, OnDestroy, signal, WritableSignal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { IconComponent } from "../../../../../components/icon/icon.component";
 import { Sensors } from '../../../../../models/sensors.enum';
 import { Status } from '../../../../../models/status.enum';
+import { ComponentService } from '../../../../../services/component.service';
 import { TreeService } from '../../../../../services/tree.service';
 import { TreeItemType } from './models/tree-item.enum';
 import { TreeItemModel } from './models/tree-item.model';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ComponentService } from '../../../../../services/component.service';
 
 @Component({
   selector: 'app-tree-item',
@@ -16,18 +17,23 @@ import { ComponentService } from '../../../../../services/component.service';
   styleUrl: './tree-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TreeItemComponent {
+export class TreeItemComponent implements OnDestroy {
   public model = input<TreeItemModel>(new TreeItemModel('', '', TreeItemType.Location, null, null));
 
+  private _selectedComponentSubscription: Subscription;
+  private _getChildrenSubscription?: Subscription;
+
   protected indent = input<number>(0);
-
   protected sensorIconColorClass = computed(() => this.getSensorIconColorClasss());
-
   protected sensorIcon = computed(() => this.getSensorIconName());
-
   protected children: WritableSignal<TreeItemModel[]> = signal<TreeItemModel[]>([]);
+  protected isSelected = signal(false);
 
-  constructor(private treeService: TreeService, private router: Router, private activatedRoute: ActivatedRoute, private componentService: ComponentService) { }
+  constructor(private treeService: TreeService, private router: Router, private activatedRoute: ActivatedRoute, private componentService: ComponentService) {
+    this._selectedComponentSubscription = componentService.selectedComponent.subscribe(selectedComponent => {
+      this.isSelected.set(Boolean(selectedComponent.id) && selectedComponent.id === this.model().id);
+    });
+  }
 
   private getSensorIconColorClasss(): string {
     return this.model().status === Status.Alert ? 'sensor-alert' : 'sensor-normal';
@@ -45,22 +51,27 @@ export class TreeItemComponent {
   protected getChildren() {
     if (!this.model().hasChildren || this.children().length) return;
 
-    this.treeService.getChildren(this.model().id)
+    this._getChildrenSubscription = this.treeService.getChildren(this.model().id)
       .subscribe(children => this.children.set(children));
   }
 
   private selectComponent() {
-    this.componentService.setSelectedComponent(this.model());
-    this.navigateToComponent();
-  }
-
-  private navigateToComponent() {
     if (this.isComponent()) {
-      this.router.navigate(['component', this.model().id], { relativeTo: this.activatedRoute });
+      this.componentService.setSelectedComponent(this.model());
+      this.navigateToComponent();
     }
   }
 
   private isComponent(): boolean {
     return this.model().type === TreeItemType.Component;
+  }
+
+  private navigateToComponent() {
+    this.router.navigate(['component', this.model().id], { relativeTo: this.activatedRoute });
+  }
+
+  ngOnDestroy(): void {
+    this._selectedComponentSubscription.unsubscribe();
+    this._getChildrenSubscription?.unsubscribe();
   }
 }

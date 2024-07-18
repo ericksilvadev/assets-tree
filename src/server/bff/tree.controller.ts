@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { TreeService } from '../domain/tree/tree.service';
 import { HttpStatusCode } from 'axios';
+import { FilterModel } from '../../app/models/filter.model';
 
 export class TreeController {
   constructor(private treeService: TreeService) { }
@@ -8,8 +9,10 @@ export class TreeController {
   public async getTree(req: Request, res: Response) {
     const { id } = req.params;
 
+    const filter = FilterModel.fromQueryParams(req.query);
+
     try {
-      const treeItems = await this.treeService.getItems(id);
+      const treeItems = await this.treeService.getItems(id, filter);
       res.send(treeItems);
     } catch (error: unknown) {
       res.status(HttpStatusCode.InternalServerError).json({ error });

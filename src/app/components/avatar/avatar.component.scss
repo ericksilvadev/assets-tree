@@ -1,0 +1,14 @@
+@import '../../../styles/colors/semantic-color-tokens.scss';
+
+.avatar {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background-color: $semantics-blue-low-emphasis;
+  text-transform: uppercase;
+  color: $semantics-global-white;
+  text-align: center;
+  display: grid;
+  place-content: center;
+  font-size: 1.4rem;
+}

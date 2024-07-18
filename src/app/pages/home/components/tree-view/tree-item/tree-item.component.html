@@ -10,14 +10,16 @@
     <div class="tree-item-default-indent"></div>
     }
 
-    <app-icon [name]="model().type" class="item-icon" data-test-id="item-icon"></app-icon>
+    <div class="summary-content" [class.selected]="isSelected()">
+      <app-icon [name]="model().type" class="item-icon" data-test-id="item-icon"></app-icon>
 
-    <label class="tree-item-name">{{ model().name }}</label>
+      <label class="tree-item-name">{{ model().name }}</label>
 
-    @if(model().sensor) {
-    <app-icon [name]="sensorIcon()" [attr.class]="sensorIconColorClass() + ' sensor-icon'"
-      data-test-id="sensor-icon"></app-icon>
-    }
+      @if(model().sensor) {
+      <app-icon [name]="sensorIcon()" [attr.class]="sensorIconColorClass() + ' sensor-icon'"
+        data-test-id="sensor-icon"></app-icon>
+      }
+    </div>
   </summary>
 
   @for(child of children(); track child.id) {

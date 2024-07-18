@@ -62,7 +62,25 @@ describe('ComponentDetailsComponent', () => {
     const sensorIconElement = sensorIcon.nativeElement as HTMLElement;
 
     // assert
-    expect(sensorIconInstance.name()).toBe(SensorsMap[componentItem.sensorType] as string);
+    expect(sensorIconInstance.name()).toBe('bolt');
     expect(sensorIconElement.classList).toContain(StatusMap[componentItem.status] as string);
+  });
+
+  it('should display component sensor icon and id', () => {
+    // arrange
+    const sensorIcon = fixture.debugElement.query(By.css('.component-sensor-details app-icon')).componentInstance as IconComponent;
+    const sensorId = fixture.debugElement.nativeElement.querySelector('.component-sensor-details');
+
+    // assert
+    expect(sensorIcon.name()).toBe(SensorsMap[componentItem.sensorType] as string);
+    expect(sensorId.textContent).toContain(componentItem.sensorId);
+  });
+
+  it('should display component gateway id', () => {
+    // arrange
+    const gatewayId = fixture.debugElement.nativeElement.querySelector('.component-gateway-details');
+
+    // assert
+    expect(gatewayId.textContent).toContain(componentItem.gatewayId);
   });
 });

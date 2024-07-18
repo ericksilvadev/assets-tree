@@ -118,4 +118,16 @@ describe('TreeItemComponent', () => {
 
     expect(indentElements.length).toBe(indent);
   });
+
+  it('should set selected class if item is selected', () => {
+    // arrange
+    component['componentService'].selectedComponent.next(component['model']());
+
+    // act
+    fixture.detectChanges();
+
+    // assert
+    const item = fixture.nativeElement.querySelector('.summary-content');
+    expect(item.classList).toContain('selected');
+  });
 });

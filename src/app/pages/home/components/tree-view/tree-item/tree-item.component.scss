@@ -8,6 +8,25 @@ details summary.tree-item {
   color: $semantics-gray-high-emphasis;
   cursor: pointer;
 
+  .summary-content {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    flex: 1;
+    padding-left: 0.6rem;
+    translate: -0.6rem 0;
+
+    &.selected {
+      background-color: $semantics-blue-low-emphasis;
+      color: $semantics-global-white;
+
+      label,
+      app-icon.item-icon {
+        color: $semantics-global-white;
+      }
+    }
+  }
+
   &::selection,
   >*::selection {
     background-color: transparent;

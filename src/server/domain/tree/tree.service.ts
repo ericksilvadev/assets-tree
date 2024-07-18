@@ -7,18 +7,24 @@ import { TreeItemModel } from '../../../app/pages/home/components/tree-view/tree
 import { AssetsAndLocationsRepository } from '../../repositories/assets-and-locations.repository';
 import { AssetEntity } from '../entities/asset';
 import { LocationEntity } from '../entities/location';
+import { FilterItemsService } from '../useCases/filter-items.service';
 
 export class TreeService {
-  constructor(private companyRepository: AssetsAndLocationsRepository) { }
 
-  private itemMap = new Map<string, TreeItemModel>();
-  private parentIds = new Set<string>();
   private locations: LocationEntity[] = [];
   private assets: AssetEntity[] = [];
   private items: TreeItemModel[] = [];
+  private parents = new Set<string>();
+  private itemMap = new Map<string, TreeItemModel>();
+  private assetsMap = new Map<string, AssetEntity>();
+  private filteredItemMap = new Map<string, TreeItemModel>();
+  private filterService: FilterItemsService = new FilterItemsService(new FilterModel());
   private companyId: string = '';
 
+  constructor(private companyRepository: AssetsAndLocationsRepository) { }
+
   public async getItems(companyId: string, filter: FilterModel = new FilterModel()): Promise<TreeItemModel[]> {
+    this.filterService = new FilterItemsService(filter);
     this.assets = await this.getAssets(companyId);
     this.locations = await this.getLocations(companyId);
     this.setup(companyId);
@@ -40,8 +46,10 @@ export class TreeService {
       this.resetItems();
       this.setLocations();
       this.setAssets();
-      this.setRoot();
     }
+
+    this.setFilteredItems();
+    this.setRoot();
   }
 
   private resetItems() {
@@ -52,14 +60,15 @@ export class TreeService {
   private setLocations(): void {
     for (const location of this.locations) {
       this.getSetItem(location.id, location.name, TreeItemType.Location, location.parentId);
-      this.parentIds.add(location.parentId || '');
+      this.parents.add(location.parentId || '');
     }
   }
 
   private setAssets(): void {
     for (const asset of this.assets) {
+      this.assetsMap.set(asset.id, asset);
       this.getSetItem(asset.id, asset.name, this.getAssetType(asset), asset.parentId || asset.locationId, this.getAssetStatus(asset), this.getAssetSensor(asset));
-      this.parentIds.add(asset.parentId || asset.locationId || '');
+      this.parents.add(asset.parentId || asset.locationId || '');
     }
   }
 
@@ -90,16 +99,50 @@ export class TreeService {
   }
 
   private setRoot(): void {
+    if (this.itemMap.size === this.filteredItemMap.size) {
+      this.setDefaultRoot();
+    } else {
+      this.setFilteredRoot();
+    }
+  }
+
+  private setDefaultRoot() {
+    this.items = [];
+
     this.itemMap.forEach(item => {
-      if (this.isRootItem(item)) {
-        item.hasChildren = this.parentIds.has(item.id);
+      if (!item.parentId) {
+        item.hasChildren = this.itemHasChildren(item);
         this.items.push(item);
       }
     });
   }
 
-  private isRootItem(item: TreeItemModel): boolean {
-    return !this.itemMap.get(item.id)?.parentId;
+  private setFilteredRoot() {
+    this.items = [];
+
+    this.itemMap.forEach(item => {
+      if (this.isFilteredItemOrParent(item) && !item.parentId) {
+        item.hasChildren = this.itemHasChildren(item);
+        this.items.push(item);
+      }
+    });
+  }
+
+  private isFilteredItemOrParent(item: TreeItemModel): boolean {
+    let hasFilteredChild = false;
+
+    if (this.filteredItemMap.has(item.id)) return true;
+
+    if (this.itemHasChildren(item)) {
+      for (let child of this.getChildren(item.id)) {
+        if (this.isFilteredItemOrParent(child)) {
+          hasFilteredChild = true;
+          break;
+        }
+      }
+    }
+
+    return hasFilteredChild;
   }
 
   public getChildren(parentId: string): TreeItemModel[] {
@@ -107,12 +150,20 @@ export class TreeService {
 
     for (let item of this.itemMap.values()) {
       if (item.parentId === parentId) {
-        item.hasChildren = this.parentIds.has(item.id);
+        item.hasChildren = this.itemHasChildren(item);
         children.push(item);
       }
     }
 
     return children;
+  }
+
+  private itemHasChildren(item: TreeItemModel): boolean {
+    return this.parents.has(item.id);
+  }
+
+  private setFilteredItems(): void {
+    this.filteredItemMap = this.filterService.filter(this.itemMap);
   }
 
   public getComponent(id: string): ComponentModel | undefined {
@@ -125,6 +176,6 @@ export class TreeService {
   }
 
   private getAsset(id: string): AssetEntity | undefined {
-    return this.assets.find(asset => asset.id === id);
+    return this.assetsMap.get(id);
   }
 }
