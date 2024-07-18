@@ -1,19 +1,18 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation, WritableSignal, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, WritableSignal, input, signal } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { svgIcons } from './icon.svg';
 
 @Component({
   selector: 'app-icon',
   standalone: true,
-  template: '<div [innerHTML]="icon()" class="icon"></div>',
+  templateUrl: './icon.component.html',
   styleUrl: './icon.component.scss',
-  encapsulation: ViewEncapsulation.ShadowDom,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IconComponent implements OnInit {
 
-  @Input()
-  name: string = '';
+  name = input<string>('');
+  class = input<string>('');
 
   protected icon: WritableSignal<SafeHtml> = signal('');
 
@@ -24,7 +23,7 @@ export class IconComponent implements OnInit {
   }
 
   private setIcon(): void {
-    const icon = this.getIcon(this.name);
+    const icon = this.getIcon(this.name());
 
     this.icon.set(icon);
   }

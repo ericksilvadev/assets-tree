@@ -1,0 +1,26 @@
+<details #details>
+  <summary class="tree-item" (click)="onSummaryClick()">
+    @for (_ of [].constructor(indent()); track indent()) {
+    <div class="tree-item-indent"></div>
+    }
+
+    @if(model().hasChildren) {
+    <app-icon name="arrowDown" class="tree-item-arrow" data-test-id="tree-item-arrow"></app-icon>
+    }@else {
+    <div class="tree-item-default-indent"></div>
+    }
+
+    <app-icon [name]="model().type" class="item-icon" data-test-id="item-icon"></app-icon>
+
+    <label class="tree-item-name">{{ model().name }}</label>
+
+    @if(model().sensor) {
+    <app-icon [name]="sensorIcon()" [attr.class]="sensorIconColorClass() + ' sensor-icon'"
+      data-test-id="sensor-icon"></app-icon>
+    }
+  </summary>
+
+  @for(child of children(); track child.id) {
+  <app-tree-item [model]="child" [indent]="indent() + 1"></app-tree-item>
+  }
+</details>

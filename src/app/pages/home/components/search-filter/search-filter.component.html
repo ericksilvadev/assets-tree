@@ -1,0 +1,7 @@
+<div class="input-wrapper">
+  <input #input type="text" [formControl]="search" [value]="(filter | async)?.search"
+    placeholder="Buscar Ativo ou Local">
+  <button type="button" (click)="input.focus()">
+    <app-icon name="search"></app-icon>
+  </button>
+</div>

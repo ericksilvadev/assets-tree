@@ -2,11 +2,11 @@ import { TestBed } from '@angular/core/testing';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
-import { Company } from '../models/company.model';
-import { CompanyRepository } from '../repositories/company.repository';
-import { CompanyService } from './company.service';
+import { Company } from '../../models/company.model';
+import { CompanyRepository } from '../../repositories/company.repository';
+import { CompanyService } from '../company.service';
 import { Injector, runInInjectionContext } from '@angular/core';
-import { AppContextService } from './app-context.service';
+import { AppContextService } from '../app-context.service';
 
 describe('CompanyService', () => {
   let service: CompanyService;

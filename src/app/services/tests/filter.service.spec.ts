@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FilterService } from './filter.service';
-import { FilterModel, Sensors, Status } from '../models/filter.model';
+import { FilterModel } from '../../models/filter.model';
+import { FilterService } from '../filter.service';
 
 describe('FilterService', () => {
   let service: FilterService;
@@ -17,7 +17,7 @@ describe('FilterService', () => {
 
   it('should set filter', () => {
     // arrange
-    const filter = new FilterModel('search', [Sensors.Energy], [Status.Alert]);
+    const filter = new FilterModel('search', 0, 0);
 
     // act
     service.setFilter(filter);

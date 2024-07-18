@@ -1,0 +1,34 @@
+@import '../../../../../styles/colors/semantic-color-tokens.scss';
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid $semantics-gray-medium-faded;
+  border-radius: 0.3rem;
+  padding: 0.8rem;
+  background-color: $semantics-global-white;
+  position: relative;
+  z-index: 1;
+
+  input {
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    outline: none;
+    color: $neutral-colors-gray-950;
+
+    &::placeholder {
+      color: $semantics-gray-hight-faded;
+      font-size: 1.4rem;
+    }
+  }
+
+  button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.6rem;
+    color: $neutral-colors-gray-950;
+  }
+}

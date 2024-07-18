@@ -1,0 +1,49 @@
+@import '../../../../../../styles/colors/semantic-color-tokens.scss';
+
+details summary.tree-item {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: $semantics-gray-high-emphasis;
+  cursor: pointer;
+
+  &::selection,
+  >*::selection {
+    background-color: transparent;
+  }
+
+  app-icon.item-icon {
+    color: $semantics-blue-low-emphasis;
+  }
+
+  app-icon.tree-item-arrow {
+    rotate: -90deg;
+    transition: 0.2s;
+    transition: 0.3s;
+  }
+
+  app-icon.sensor-alert {
+    color: $semantics-red-medium;
+  }
+
+  app-icon.sensor-normal {
+    color: $semantics-green-medium;
+  }
+
+  .tree-item-name {
+    pointer-events: none;
+  }
+
+  .tree-item-default-indent {
+    width: 1.6rem;
+  }
+
+  .tree-item-indent {
+    width: 1.2rem;
+  }
+}
+
+details[open]>summary.tree-item app-icon.tree-item-arrow {
+  rotate: 0deg;
+}

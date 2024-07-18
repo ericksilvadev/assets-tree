@@ -1,0 +1,130 @@
+import { ComponentModel } from '../../../app/models/component.model';
+import { FilterModel } from '../../../app/models/filter.model';
+import { Sensors, SensorsMap } from '../../../app/models/sensors.enum';
+import { Status, StatusMap } from '../../../app/models/status.enum';
+import { TreeItemType } from '../../../app/pages/home/components/tree-view/tree-item/models/tree-item.enum';
+import { TreeItemModel } from '../../../app/pages/home/components/tree-view/tree-item/models/tree-item.model';
+import { AssetsAndLocationsRepository } from '../../repositories/assets-and-locations.repository';
+import { AssetEntity } from '../entities/asset';
+import { LocationEntity } from '../entities/location';
+
+export class TreeService {
+  constructor(private companyRepository: AssetsAndLocationsRepository) { }
+
+  private itemMap = new Map<string, TreeItemModel>();
+  private parentIds = new Set<string>();
+  private locations: LocationEntity[] = [];
+  private assets: AssetEntity[] = [];
+  private items: TreeItemModel[] = [];
+  private companyId: string = '';
+
+  public async getItems(companyId: string, filter: FilterModel = new FilterModel()): Promise<TreeItemModel[]> {
+    this.assets = await this.getAssets(companyId);
+    this.locations = await this.getLocations(companyId);
+    this.setup(companyId);
+
+    return this.items;
+  }
+
+  private async getAssets(companyId: string): Promise<AssetEntity[]> {
+    return this.companyRepository.getAssets(companyId);
+  }
+
+  private async getLocations(companyId: string): Promise<LocationEntity[]> {
+    return this.companyRepository.getLocations(companyId);
+  }
+
+  private setup(companyId: string) {
+    if (companyId != this.companyId) {
+      this.companyId = companyId;
+      this.resetItems();
+      this.setLocations();
+      this.setAssets();
+      this.setRoot();
+    }
+  }
+
+  private resetItems() {
+    this.items = [];
+    this.itemMap.clear();
+  }
+
+  private setLocations(): void {
+    for (const location of this.locations) {
+      this.getSetItem(location.id, location.name, TreeItemType.Location, location.parentId);
+      this.parentIds.add(location.parentId || '');
+    }
+  }
+
+  private setAssets(): void {
+    for (const asset of this.assets) {
+      this.getSetItem(asset.id, asset.name, this.getAssetType(asset), asset.parentId || asset.locationId, this.getAssetStatus(asset), this.getAssetSensor(asset));
+      this.parentIds.add(asset.parentId || asset.locationId || '');
+    }
+  }
+
+  private getSetItem(id: string, name: string, type: TreeItemType, parentId?: string | null, status?: Status | null, sensor?: Sensors | null) {
+    if (!this.itemMap.has(id)) {
+      this.itemMap.set(id, new TreeItemModel(id, name, type, parentId, status, sensor));
+    }
+  }
+
+  private getAssetType(asset: AssetEntity): TreeItemType {
+    return asset.sensorType ? TreeItemType.Component : TreeItemType.Asset;
+  }
+
+  private getAssetStatus(asset: AssetEntity): Status | null {
+    if (!asset.status) {
+      return null;
+    }
+
+    return StatusMap[asset.status] as Status;
+  }
+
+  private getAssetSensor(asset: AssetEntity): Sensors | null {
+    if (!asset.sensorType) {
+      return null;
+    }
+
+    return SensorsMap[asset.sensorType] as Sensors;
+  }
+
+  private setRoot(): void {
+    this.itemMap.forEach(item => {
+      if (this.isRootItem(item)) {
+        item.hasChildren = this.parentIds.has(item.id);
+        this.items.push(item);
+      }
+    });
+  }
+
+  private isRootItem(item: TreeItemModel): boolean {
+    return !this.itemMap.get(item.id)?.parentId;
+  }
+
+  public getChildren(parentId: string): TreeItemModel[] {
+    const children: TreeItemModel[] = [];
+
+    for (let item of this.itemMap.values()) {
+      if (item.parentId === parentId) {
+        item.hasChildren = this.parentIds.has(item.id);
+        children.push(item);
+      }
+    }
+
+    return children;
+  }
+
+  public getComponent(id: string): ComponentModel | undefined {
+    const asset = this.getAsset(id);
+
+    if (!asset)
+      return;
+
+    return ComponentModel.fromEntity(asset);
+  }
+
+  private getAsset(id: string): AssetEntity | undefined {
+    return this.assets.find(asset => asset.id === id);
+  }
+}

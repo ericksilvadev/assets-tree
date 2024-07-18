@@ -27,6 +27,8 @@ export class HeaderComponent implements OnDestroy {
   }
 
   protected setCurrentCompany(company: Company): void {
+    if (company.id === this.currentCompany().id) return;
+
     this.contextService.setCurrentCompany(company);
   }
 

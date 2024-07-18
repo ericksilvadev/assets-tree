@@ -13,11 +13,19 @@
     border: 1px solid $semantics-gray-medium-faded;
     color: $semantics-gray-medium-emphasis;
     cursor: pointer;
-    transition: all 0.2s;
+
+    app-icon,
+    span,
+    & {
+      transition: all 0.2s;
+    }
+
+    app-icon {
+      color: $semantics-blue-low-emphasis;
+    }
 
     span {
       color: $semantics-gray-medium-emphasis;
-      transition: all 0.2s;
       font-weight: 600;
 
       &::selection {
@@ -29,7 +37,8 @@
       background-color: $semantics-blue-low-emphasis;
       color: $semantics-global-white;
 
-      span {
+      span,
+      app-icon {
         color: $semantics-global-white;
       }
     }

@@ -33,7 +33,7 @@ describe('ButtonComponent', () => {
     const iconComponent = fixture.debugElement.query(By.css('app-icon')).componentInstance as IconComponent;
 
     // assert
-    expect(iconComponent.name).toBe(component.icon());
+    expect(iconComponent.name()).toBe(component.icon());
   });
 
   it('should not render icon if icon is not provided', () => {
