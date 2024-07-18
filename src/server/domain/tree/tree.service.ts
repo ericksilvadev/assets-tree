@@ -171,16 +171,10 @@ export class TreeService {
 
     for (let item of this.itemMap.values()) {
       if (item.parentId === parentId) {
-        const isFiltered = this.filteredItemMap.has(item.id);
-        const hasFilteredDescendants = this.hasFilteredDescendants(item.id);
-
-        if (isFiltered || hasFilteredDescendants) {
+        if (this.shouldIncludeItem(item.id)) {
           item.hasChildren = this.itemHasChildren(item);
+          item.children = this.getFilteredChildren(item.id);
           children.push(item);
-
-          if (item.hasChildren) {
-            item.children = this.getFilteredChildren(item.id);
-          }
         }
       }
     }
@@ -191,12 +185,16 @@ export class TreeService {
   private hasFilteredDescendants(itemId: string): boolean {
     for (let item of this.itemMap.values()) {
       if (item.parentId === itemId) {
-        if (item.parentId === itemId && this.filteredItemMap.has(item.id) || this.hasFilteredDescendants(item.id)) {
+        if (this.shouldIncludeItem(item.id)) {
           return true;
         }
       }
     }
     return false;
+  }
+
+  private shouldIncludeItem(itemId: string): boolean {
+    return this.filteredItemMap.has(itemId) || this.hasFilteredDescendants(itemId);
   }
 
   private itemHasChildren(item: TreeItemModel): boolean {
