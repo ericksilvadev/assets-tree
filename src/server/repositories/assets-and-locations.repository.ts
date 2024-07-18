@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { environment } from '../../environment/environment';
 import { AssetEntity } from '../domain/entities/asset';
 import { LocationEntity } from '../domain/entities/location';
@@ -8,12 +7,12 @@ export class AssetsAndLocationsRepository {
   constructor() { }
 
   async getAssets(companyId: string): Promise<AssetEntity[]> {
-    const { data } = await axios.get(`${this.baseUrl}/${companyId}/assets`);
+    const data = (await fetch(`${this.baseUrl}/${companyId}/assets`)).json();
     return data;
   }
 
   async getLocations(companyId: string): Promise<LocationEntity[]> {
-    const { data } = await axios.get(`${this.baseUrl}/${companyId}/locations`);
+    const data = (await fetch(`${this.baseUrl}/${companyId}/locations`)).json();
     return data;
   }
 }
