@@ -25,28 +25,48 @@
     padding: 2.4rem;
 
     .upper-section {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      grid-template-rows: 1fr 1px 1fr;
-      grid-template-areas:
-        'image upper-details'
-        'image divider'
-        'image lower-details';
+      display: flex;
+      gap: 2.4rem;
+      align-items: center;
+
+      aside {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        .details-section {
+          padding-left: 0;
+        }
+      }
 
       .component-image-wrapper {
         grid-area: image;
-      }
+        display: grid;
+        place-items: center;
+        color: $semantics-blue-hight-faded;
+        padding: 8rem;
+        background-color: $neutral-colors-blue-100;
+        border: 1px dashed $semantics-blue-hight-faded;
+        border-radius: 0.4rem;
+        cursor: pointer;
+        position: relative;
 
-      .details-section:first-child {
-        grid-area: upper-details;
-      }
+        #add-image {
+          opacity: 0;
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          cursor: pointer;
+        }
 
-      .details-section:last-child {
-        grid-area: lower-details;
-      }
+        app-icon {
+          scale: 3;
+          transform-origin: bottom;
+        }
 
-      .divider {
-        grid-area: divider;
+        >* {
+          translate: 0 30%;
+        }
       }
     }
 
@@ -60,15 +80,14 @@
       width: 100%;
       height: 1px;
       border: 0;
+      margin: 2.4rem 0;
       border-bottom: 1px solid $semantics-gray-medium-faded;
-      margin: 0;
     }
 
     .details-section {
       display: flex;
       flex-direction: column;
       gap: 0.8rem;
-      padding: 2.4rem;
 
       >div {
         display: flex;
