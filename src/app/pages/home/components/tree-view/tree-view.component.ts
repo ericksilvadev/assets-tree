@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, Signal } from '@angular/core';
 import { TreeService } from '../../../../services/tree.service';
 import { SearchFilterComponent } from "../search-filter/search-filter.component";
-import { TreeItemModel } from './tree-item/models/tree-item.model';
+import { TreeItemModel } from '../../../../models/tree-item.model';
 import { TreeItemComponent } from "./tree-item/tree-item.component";
 
 @Component({

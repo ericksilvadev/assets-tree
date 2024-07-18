@@ -1,6 +1,6 @@
 import { Component, computed, OnDestroy, signal } from '@angular/core';
-import { TreeItemModel } from '../tree-view/tree-item/models/tree-item.model';
-import { TreeItemType } from '../tree-view/tree-item/models/tree-item.enum';
+import { TreeItemModel } from '../../../../models/tree-item.model';
+import { TreeItemType } from '../../../../models/tree-item.enum';
 import { ComponentService } from '../../../../services/component.service';
 import { Subscription } from 'rxjs';
 import { ComponentModel } from '../../../../models/component.model';

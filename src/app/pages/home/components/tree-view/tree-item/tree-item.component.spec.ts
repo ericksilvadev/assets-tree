@@ -7,8 +7,8 @@ import { routes } from '../../../../../app.routes';
 import { IconComponent } from '../../../../../components/icon/icon.component';
 import { Sensors } from '../../../../../models/sensors.enum';
 import { Status } from '../../../../../models/status.enum';
-import { TreeItemType } from './models/tree-item.enum';
-import { TreeItemModel } from './models/tree-item.model';
+import { TreeItemType } from '../../../../../models/tree-item.enum';
+import { TreeItemModel } from '../../../../../models/tree-item.model';
 import { TreeItemComponent } from './tree-item.component';
 
 describe('TreeItemComponent', () => {

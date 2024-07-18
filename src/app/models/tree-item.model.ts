@@ -1,5 +1,5 @@
-import { Sensors } from "../../../../../../models/sensors.enum";
-import { Status } from "../../../../../../models/status.enum";
+import { Sensors } from "./sensors.enum";
+import { Status } from "./status.enum";
 import { TreeItemType } from "./tree-item.enum";
 
 export class TreeItemModel {

@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from '../../environment/environment';
 import { ComponentModel } from '../models/component.model';
 import { FilterModel } from '../models/filter.model';
-import { TreeItemModel } from '../pages/home/components/tree-view/tree-item/models/tree-item.model';
+import { TreeItemModel } from '../models/tree-item.model';
 
 @Injectable({
   providedIn: 'root'

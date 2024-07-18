@@ -6,8 +6,8 @@ import { Sensors } from '../../../../../models/sensors.enum';
 import { Status } from '../../../../../models/status.enum';
 import { ComponentService } from '../../../../../services/component.service';
 import { TreeService } from '../../../../../services/tree.service';
-import { TreeItemType } from './models/tree-item.enum';
-import { TreeItemModel } from './models/tree-item.model';
+import { TreeItemType } from '../../../../../models/tree-item.enum';
+import { TreeItemModel } from '../../../../../models/tree-item.model';
 
 @Component({
   selector: 'app-tree-item',
