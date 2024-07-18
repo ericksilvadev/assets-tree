@@ -15,6 +15,7 @@ export class TreeService implements OnDestroy {
 
   private _companyChangeSubscription: Subscription;
   private _filterChangeSubscription: Subscription;
+  private _getItemsSubscription?: Subscription;
 
   constructor(private treeRepository: TreeRepository, appContext: AppContextService, filterService: FilterService) {
     this._companyChangeSubscription = appContext.currentCompany.subscribe(company => {
@@ -29,7 +30,7 @@ export class TreeService implements OnDestroy {
   private setItems(companyId: string, filter: FilterModel = new FilterModel()): void {
     if (!companyId) return;
 
-    this.treeRepository.getItems(companyId, filter).subscribe(assets => {
+    this._getItemsSubscription = this.treeRepository.getItems(companyId, filter).subscribe(assets => {
       this.items.set(assets);
     });
   }
@@ -41,5 +42,6 @@ export class TreeService implements OnDestroy {
   ngOnDestroy(): void {
     this._companyChangeSubscription.unsubscribe();
     this._filterChangeSubscription.unsubscribe();
+    this._getItemsSubscription?.unsubscribe();
   }
 }

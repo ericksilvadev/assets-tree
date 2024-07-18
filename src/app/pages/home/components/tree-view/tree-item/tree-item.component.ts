@@ -21,6 +21,7 @@ export class TreeItemComponent implements OnDestroy {
   public model = input<TreeItemModel>(new TreeItemModel('', '', TreeItemType.Location, null, null));
 
   private _selectedComponentSubscription: Subscription;
+  private _getChildrenSubscription?: Subscription;
 
   protected indent = input<number>(0);
   protected sensorIconColorClass = computed(() => this.getSensorIconColorClasss());
@@ -50,7 +51,7 @@ export class TreeItemComponent implements OnDestroy {
   protected getChildren() {
     if (!this.model().hasChildren || this.children().length) return;
 
-    this.treeService.getChildren(this.model().id)
+    this._getChildrenSubscription = this.treeService.getChildren(this.model().id)
       .subscribe(children => this.children.set(children));
   }
 
@@ -71,5 +72,6 @@ export class TreeItemComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this._selectedComponentSubscription.unsubscribe();
+    this._getChildrenSubscription?.unsubscribe();
   }
 }

@@ -23,6 +23,7 @@ export class ComponentDetailsComponent implements OnDestroy {
   protected statusColorClass = computed(() => StatusMap[this.component().status] as string);
 
   private _componentSubscription: Subscription;
+  private _getComponentSubscription?: Subscription;
 
   constructor(private componentService: ComponentService) {
     this._componentSubscription = componentService.selectedComponent.subscribe((component) => {
@@ -34,7 +35,7 @@ export class ComponentDetailsComponent implements OnDestroy {
 
   private setComponent(component: TreeItemModel): void {
     if (component.type === TreeItemType.Component) {
-      this.componentService.getComponent(component.id).subscribe((componentDetails: ComponentModel) => {
+      this._getComponentSubscription = this.componentService.getComponent(component.id).subscribe((componentDetails: ComponentModel) => {
         this.component.set(componentDetails);
       });
     }
@@ -42,5 +43,6 @@ export class ComponentDetailsComponent implements OnDestroy {
 
   ngOnDestroy() {
     this._componentSubscription.unsubscribe();
+    this._getComponentSubscription?.unsubscribe();
   }
 }
