@@ -5,7 +5,7 @@ export class FilterItemsService {
   constructor(private filterModel: FilterModel) { }
 
   public filter(items: Map<string, TreeItemModel>): Map<string, TreeItemModel> {
-    const filteredItems = this.filterItems(items, this.filterBySearch);
+    const filteredItems = this.filterItems(items, this.filterBySearch, this.filterBySensors, this.filterByStatus);
 
     return filteredItems;
   }
@@ -17,6 +17,34 @@ export class FilterItemsService {
 
     for (let item of items.values()) {
       if (item.name.toLowerCase().includes(filter.search.toLowerCase())) {
+        filteredItems.set(item.id, item);
+      }
+    }
+
+    return filteredItems;
+  }
+
+  private filterBySensors(items: Map<string, TreeItemModel>, filter: FilterModel): Map<string, TreeItemModel> {
+    const filteredItems = new Map<string, TreeItemModel>();
+
+    if (!filter.sensors) return items;
+
+    for (let item of items.values()) {
+      if (Boolean((item.sensor || 0) & filter.sensors)) {
+        filteredItems.set(item.id, item);
+      }
+    }
+
+    return filteredItems;
+  }
+
+  private filterByStatus(items: Map<string, TreeItemModel>, filter: FilterModel): Map<string, TreeItemModel> {
+    const filteredItems = new Map<string, TreeItemModel>();
+
+    if (!filter.status) return items;
+
+    for (let item of items.values()) {
+      if (Boolean((item.status || 0) & filter.status)) {
         filteredItems.set(item.id, item);
       }
     }
