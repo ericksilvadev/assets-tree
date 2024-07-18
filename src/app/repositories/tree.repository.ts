@@ -30,12 +30,12 @@ export class TreeRepository {
 
     const params = new HttpParams();
 
-    return this.http.get<TreeItemModel[]>(`${environment.baseBffApiUrl}/children/${parentId}`, { params });
+    return this.http.get<TreeItemModel[]>(`${this.baseUrl}/children/${parentId}`, { params });
   }
 
   public getComponent(id: string): Observable<ComponentModel> {
     const params = new HttpParams();
 
-    return this.http.get<ComponentModel>(`${environment.baseBffApiUrl}/component/${id}`, { params });
+    return this.http.get<ComponentModel>(`${this.baseUrl}/component/${id}`, { params });
   }
 }
