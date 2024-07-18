@@ -1,6 +1,19 @@
 # Tractian Challenge
-
 This is my solution for the Tractian Frontend challenge. Here's a summary of what I did, the tools and strategies I used, and what I could have done better.
+
+## Summary
+- [Tools](#tools)
+- [Strategies](#strategies)
+  - [Angular OnPush Change Detection Strategy](#angular-onpush-change-detection-strategy)
+  - [SSR and BFF](#ssr-and-bff)
+  - [TDD](#tdd)
+- [Improvements That I Wish I Had Made](#improvements-that-i-wish-i-had-made)
+  - [Pagination With Infinite Scrolling](#pagination-with-infinite-scrolling)
+  - [Unit Tests For BFF Layer](#unit-tests-for-bff-layer)
+  - [Filter Optimization](#filter-optimization)
+  - [Animations and Transitions](#animations-and-transitions)
+  - [Loading Feedback](#loading-feedback)
+- [The APP](#the-app)
 
 ## Tools
 
@@ -8,7 +21,7 @@ To deploy the challenge faster, I chose to use Angular since it's a framework I'
 
 ## Strategies
 
-To enhance performance, I used some strategies that I found fit the solution. Let's talk about them.
+To enhance performance and write a better code, I used some strategies that I found fit the solution. Let's talk about them.
 
 ### Angular OnPush Change Detection Strategy
 
@@ -33,6 +46,9 @@ Talking about performance again, infinite scrolling would be a nice feature to h
 ### Unit Tests For BFF Layer
 
 Even using TDD during development, I had some trouble making tests work for my BFF. So, I had to write them in the traditional way, which led to worse code design and a lot of time trying to resolve bugs. I should have dedicated more time to making the tests work; it would have saved me some good time.
+
+### Filter Optimization
+Optimize the search for filtered children.
 
 ### Animations and Transitions
 
