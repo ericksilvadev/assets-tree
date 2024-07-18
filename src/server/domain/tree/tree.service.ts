@@ -1,3 +1,4 @@
+import { ComponentModel } from '../../../app/models/component.model';
 import { FilterModel } from '../../../app/models/filter.model';
 import { Sensors, SensorsMap } from '../../../app/models/sensors.enum';
 import { Status, StatusMap } from '../../../app/models/status.enum';
@@ -114,7 +115,16 @@ export class TreeService {
     return children;
   }
 
-  public getComponent(id: string): AssetEntity | undefined {
+  public getComponent(id: string): ComponentModel | undefined {
+    const asset = this.getAsset(id);
+
+    if (!asset)
+      return;
+
+    return ComponentModel.fromEntity(asset);
+  }
+
+  private getAsset(id: string): AssetEntity | undefined {
     return this.assets.find(asset => asset.id === id);
   }
 }

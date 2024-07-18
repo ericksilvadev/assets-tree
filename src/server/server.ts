@@ -24,7 +24,7 @@ export function app(): express.Express {
   const treeController = new TreeController(getTreeItemsService);
 
   server.get('/api/tree/:id', (req, res) => treeController.getTree(req, res));
-  server.get('/api/children/:parentId', (req, res) => treeController.getChildren(req, res));
+  server.get('/api/tree/children/:id', (req, res) => treeController.getChildren(req, res));
   server.get('/api/tree/component/:id', (req, res) => treeController.getComponent(req, res));
 
   server.get('*.*', express.static(browserDistFolder, {
