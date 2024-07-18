@@ -17,7 +17,7 @@ This is my solution for the Tractian Frontend challenge. Here's a summary of wha
 
 ## Tools
 
-To deploy the challenge faster, I chose to use Angular since it's a framework I've been working with for more than 2 years and am more proficient with. Angular has a lot of useful tools out of the box, so I didn't need to install any other libraries to accomplish the challenge.
+To deploy the challenge faster, I chose to use Angular since it's a framework I've been working with for more than 2 years and am more proficient with. Angular has a lot of useful tools out of the box, so I didn't need to install any other libraries to accomplish the challenge. If I had more time, I'd use NextJS, witch is a framework I really want to learn more about.
 
 ## Strategies
 
