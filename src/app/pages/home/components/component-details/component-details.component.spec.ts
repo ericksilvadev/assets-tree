@@ -5,9 +5,11 @@ import { TreeItemType } from '../tree-view/tree-item/models/tree-item.enum';
 import { TreeItemModel } from '../tree-view/tree-item/models/tree-item.model';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentModel } from '../../../../models/component.model';
-import { Sensors } from '../../../../models/sensors.enum';
-import { Status } from '../../../../models/status.enum';
+import { Sensors, SensorsMap } from '../../../../models/sensors.enum';
+import { Status, StatusMap } from '../../../../models/status.enum';
 import { of } from 'rxjs';
+import { By } from '@angular/platform-browser';
+import { IconComponent } from '../../../../components/icon/icon.component';
 
 describe('ComponentDetailsComponent', () => {
   let component: ComponentDetailsComponent;
@@ -16,7 +18,7 @@ describe('ComponentDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ComponentDetailsComponent, HttpClientTestingModule]
+      imports: [ComponentDetailsComponent, HttpClientTestingModule, IconComponent]
     })
       .compileComponents();
 
@@ -51,5 +53,16 @@ describe('ComponentDetailsComponent', () => {
     // assert
     expect(spyGetComponent).toHaveBeenCalledWith(selectedItem.id);
     expect(component['component']()).toEqual(componentDetails);
+  });
+
+  it('should display component sensor type icon with correct color', () => {
+    // arrange
+    const sensorIcon = fixture.debugElement.query(By.css('app-icon.sensor-icon'));
+    const sensorIconInstance = sensorIcon.componentInstance as IconComponent;
+    const sensorIconElement = sensorIcon.nativeElement as HTMLElement;
+
+    // assert
+    expect(sensorIconInstance.name()).toBe(SensorsMap[componentItem.sensorType] as string);
+    expect(sensorIconElement.classList).toContain(StatusMap[componentItem.status] as string);
   });
 });
