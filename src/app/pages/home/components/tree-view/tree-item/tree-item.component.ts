@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, ElementRef, input, OnDestroy, signal, ViewChild, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, ElementRef, input, OnDestroy, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IconComponent } from "../../../../../components/icon/icon.component";
@@ -18,7 +18,7 @@ import { FilterService } from '../../../../../services/filter.service';
   styleUrl: './tree-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TreeItemComponent implements OnDestroy {
+export class TreeItemComponent implements OnDestroy, OnInit {
   public model = input<TreeItemModel>(new TreeItemModel('', '', TreeItemType.Location, null, null));
 
   private _selectedComponentSubscription: Subscription;
@@ -47,6 +47,16 @@ export class TreeItemComponent implements OnDestroy {
       this.children.set([]);
       this.details?.nativeElement?.removeAttribute('open');
     });
+  }
+
+  ngOnInit(): void {
+    this.setSelected();
+  }
+
+  private setSelected() {
+    const selectedComponent = this.componentService.selectedComponent.value;
+
+    this.isSelected.set(Boolean(selectedComponent.id) && selectedComponent.id === this.model().id);
   }
 
   private getSensorIconColorClasss(): string {
