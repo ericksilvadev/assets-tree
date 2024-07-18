@@ -19,6 +19,7 @@ import { AvatarComponent } from "../../../../components/avatar/avatar.component"
 export class ComponentDetailsComponent implements OnDestroy {
   protected component = signal(new ComponentModel('1', 'Component', '1', Status.Operating, Sensors.Energy, '1', '1', '1'));
   protected sensorIcon = computed(() => SensorsMap[this.component().sensorType] as string);
+  protected sensorStatusIcon = computed(() => this.component().sensorType == Sensors.Energy ? 'bolt' : 'circle');
   protected statusColorClass = computed(() => StatusMap[this.component().status] as string);
 
   private _componentSubscription: Subscription;
