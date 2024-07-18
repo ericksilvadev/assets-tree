@@ -13,7 +13,7 @@ This is my solution for the Tractian Frontend challenge. Here's a summary of wha
   - [Filter Optimization](#filter-optimization)
   - [Animations and Transitions](#animations-and-transitions)
   - [Loading Feedback](#loading-feedback)
-- [The APP](#the-app)
+- [The App](#the-app)
 
 ## Tools
 
@@ -29,7 +29,7 @@ An Angular feature that allows us to have more control over change detection and
 
 ### SSR and BFF
 
-Server-Side Rendering by itself provides a better user experience by lowering the time for the page to render, but I used it to go a little bit further. I used the power of SSR to write a layer of [Backend for Frontend](https://medium.com/mobilepeople/backend-for-frontend-pattern-why-you-need-to-know-it-46f94ce420b0) with NodeJS. This way, I was able to modify and treat the data exactly the way my client needed, without stressing the client. All data transformation occurs on the server side, allowing the app to handle large requests without affecting the client.
+Server-Side Rendering by itself provides a better user experience by lowering the time for the page to render and caching data from requests. But I used it to go a little bit further. I used the power of SSR to write a layer of [Backend for Frontend](https://medium.com/mobilepeople/backend-for-frontend-pattern-why-you-need-to-know-it-46f94ce420b0) with NodeJS. This way, I was able to modify and treat the data exactly the way my client needed, without stressing the client. All data transformation occurs on the server side, allowing the app to handle large requests without affecting the client.
 
 ### TDD
 
@@ -58,5 +58,25 @@ Another thing I'd like to have done to improve the user experience is animations
 
 Implementing simple loading spinners would make the experience much better.
 
-## The APP
-And finally, a demo video of the app working:
+## The App
+Here is a demo video of the app running. The only performance issue is when getting filtered child items. The cursor in the recording may appear to lag, but this is caused by the recording itself. Even when the server struggles to process data, like in the case I mentioned before, the client is not affected and the app continues to run perfectly. At the end of the video, I do a couple of reloads in the Apex Unit. Despite having the largest amount of data, the rendering is almost instant.
+![Video](src/assets/AssetsTree%20-%20Recording.mp4)
+![Screenshot](src/assets/Asset%20Tree%20-%20Screenshot.png)
+
+### Requirements
+You'll need to have NodeJS and NPM installed in order to run it locally, after it done, you can clone this repository and follow the steps bellow.
+
+### Running the project
+
+Once you have the project in your machine, go to the project root file and run:
+
+```
+npm run build
+```
+When the project build is finished, start the server by running
+
+```
+npm run serve:ssr
+```
+
+Server will listen by default on `http://localhost:4000`
