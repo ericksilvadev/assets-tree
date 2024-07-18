@@ -21,8 +21,9 @@ export class CompanyService {
   private setupByRoute() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        const companyId = event.url.split('/').pop();
-        this.companyParamId = companyId ?? '';
+        const companyId = event.url.split('/company/').pop();
+
+        this.companyParamId = companyId?.split('/')[0] ?? '';
         this.setCompanies();
       }
     });
