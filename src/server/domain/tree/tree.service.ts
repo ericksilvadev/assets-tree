@@ -17,7 +17,7 @@ export class TreeService {
   private parents = new Set<string>();
   private itemMap = new Map<string, TreeItemModel>();
   private assetsMap = new Map<string, AssetEntity>();
-  private filteredItems = new Map<string, TreeItemModel>();
+  private filteredItemMap = new Map<string, TreeItemModel>();
   private filterService: FilterItemsService = new FilterItemsService(new FilterModel());
   private companyId: string = '';
 
@@ -99,33 +99,43 @@ export class TreeService {
   }
 
   private setRoot(): void {
-    this.items = [];
-
-    if (this.itemMap.size === this.filteredItems.size) {
-      this.itemMap.forEach(item => {
-        if (this.isRootItem(item)) {
-          item.hasChildren = this.parents.has(item.id);
-          this.items.push(item);
-        }
-      });
+    if (this.itemMap.size === this.filteredItemMap.size) {
+      this.setDefaultRoot();
     } else {
-      this.itemMap.forEach(item => {
-        if (this.isFilteredItem(item) && this.isRootItem(item)) {
-          item.hasChildren = this.parents.has(item.id);
-          this.items.push(item);
-        }
-      });
+      this.setFilteredRoot();
     }
   }
 
-  private isFilteredItem(item: TreeItemModel): boolean {
+  private setDefaultRoot() {
+    this.items = [];
+
+    this.itemMap.forEach(item => {
+      if (!item.parentId) {
+        item.hasChildren = this.itemHasChildren(item);
+        this.items.push(item);
+      }
+    });
+  }
+
+  private setFilteredRoot() {
+    this.items = [];
+
+    this.itemMap.forEach(item => {
+      if (this.isFilteredItemOrParent(item) && !item.parentId) {
+        item.hasChildren = this.itemHasChildren(item);
+        this.items.push(item);
+      }
+    });
+  }
+
+  private isFilteredItemOrParent(item: TreeItemModel): boolean {
     let hasFilteredChild = false;
 
-    if (this.filteredItems.has(item.id)) return true;
+    if (this.filteredItemMap.has(item.id)) return true;
 
-    if (item.hasChildren) {
+    if (this.itemHasChildren(item)) {
       for (let child of this.getChildren(item.id)) {
-        if (this.isFilteredItem(child)) {
+        if (this.isFilteredItemOrParent(child)) {
           hasFilteredChild = true;
           break;
         }
@@ -135,26 +145,25 @@ export class TreeService {
     return hasFilteredChild;
   }
 
-  private isRootItem(item: TreeItemModel): boolean {
-    return !this.itemMap.get(item.id)?.parentId;
-  }
-
-  private setFilteredItems(): void {
-    this.filteredItems = this.filterService.filter(this.itemMap);
-  }
-
   public getChildren(parentId: string): TreeItemModel[] {
     const children: TreeItemModel[] = [];
 
-    console.log(this.itemMap.size);
     for (let item of this.itemMap.values()) {
       if (item.parentId === parentId) {
-        item.hasChildren = this.parents.has(item.id);
+        item.hasChildren = this.itemHasChildren(item);
         children.push(item);
       }
     }
 
     return children;
+  }
+
+  private itemHasChildren(item: TreeItemModel): boolean {
+    return this.parents.has(item.id);
+  }
+
+  private setFilteredItems(): void {
+    this.filteredItemMap = this.filterService.filter(this.itemMap);
   }
 
   public getComponent(id: string): ComponentModel | undefined {

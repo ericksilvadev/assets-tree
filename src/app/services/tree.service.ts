@@ -19,7 +19,7 @@ export class TreeService implements OnDestroy {
 
   constructor(private treeRepository: TreeRepository, appContext: AppContextService, filterService: FilterService) {
     this._companyChangeSubscription = appContext.currentCompany.subscribe(company => {
-      this.setItems(company.id);
+      this.setItems(company.id, filterService.filter.value);
     });
 
     this._filterChangeSubscription = filterService.filter.subscribe(filter => {
