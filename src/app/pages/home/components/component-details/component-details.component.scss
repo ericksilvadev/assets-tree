@@ -44,12 +44,16 @@
         display: grid;
         place-items: center;
         color: $semantics-blue-hight-faded;
-        padding: 8rem;
+        padding: 9.4rem 8.4rem;
         background-color: $neutral-colors-blue-100;
         border: 1px dashed $semantics-blue-hight-faded;
         border-radius: 0.4rem;
         cursor: pointer;
         position: relative;
+
+        label {
+          color: $semantics-blue-hight-faded;
+        }
 
         #add-image {
           opacity: 0;

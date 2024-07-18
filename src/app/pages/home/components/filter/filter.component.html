@@ -11,7 +11,7 @@
   <div class="filter">
     <label for="critical-status" [class.active]="criticalChecked()">
       <app-icon name="info"></app-icon>
-      <span>Status Crítico</span>
+      <span>Crítico</span>
     </label>
     <input #criticalCheckbox type="checkbox" [checked]="criticalChecked()"
       (change)="onCriticalFilterChange(criticalCheckbox.checked)" name="critical-status" id="critical-status">
