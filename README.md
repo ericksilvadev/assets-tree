@@ -69,7 +69,7 @@ You'll need to have NodeJS and NPM installed in order to run it locally, after i
 
 ### Running the project
 
-Once you have the project in your machine, go to the project root file and run:
+Once you have the project cloned in your machine, go to the project root file and run:
 
 ```
 npm run build
